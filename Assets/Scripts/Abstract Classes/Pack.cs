@@ -18,7 +18,7 @@ public abstract class Pack : MonoBehaviour
 
     protected abstract void checkWinStatus();
 
-    public void initializePack()
+    public virtual void initializePack()
 	{
 		#region value
 
