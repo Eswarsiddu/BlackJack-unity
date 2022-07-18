@@ -39,7 +39,7 @@ public class Card : MonoBehaviour
         renderer = GetComponent<SpriteRenderer>();
 	}
 
-	internal void GenerateCard(Sprite sprite, int number)
+	public void GenerateCard(Sprite sprite, int number)
 	{
         this.sprite = sprite;
         if(number >= 10)
@@ -53,9 +53,26 @@ public class Card : MonoBehaviour
 		faceDown();
 	}
 
+	public int orderinlayer { set { renderer.sortingOrder = value; } }
+
 	private void updateCardImage()
 	{
 		renderer.sprite = face_down ? Constants.CARDBACKSPRITE : sprite;
+	}
+
+	public Transform parent { set { transform.parent = value; } }
+
+	private IEnumerator MoveCardOffScreen()
+	{
+		yield return null;
+	}
+
+	public void ResetCard()
+	{
+		faceDown();
+		parent = Constants.finisheddeckparent;
+		gameObject.SetActive(false);
+		orderinlayer = 0;
 	}
 
 	#endregion

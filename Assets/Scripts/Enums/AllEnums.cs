@@ -1,11 +1,11 @@
 
-enum STATE
+public enum STATE
 {
     PLAYING,
     STAYED
 }
 
-enum WIN_STATUS
+public enum WIN_STATUS
 {
     BLACKJACK,
     BUST,
