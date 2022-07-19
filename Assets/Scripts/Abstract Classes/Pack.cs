@@ -12,11 +12,23 @@ public abstract class Pack : MonoBehaviour
 	protected List<Card> cards;
     protected STATE state;
 
-	#region Value
+    private WIN_STATUS _win_status;
 
-	public abstract void playerStayed();
+    public WIN_STATUS win_status
+    {
+        get => _win_status;
 
-    protected abstract void checkWinStatus();
+        set
+        {
+            _win_status = value;
+        }
+    }
+
+    #region Value
+
+    public virtual void playerStayed() {
+        state = STATE.STAYED;
+    }
 
     public virtual void initializePack()
 	{
@@ -26,13 +38,13 @@ public abstract class Pack : MonoBehaviour
         total2 = 0;
         final_value = 0;
         cards = new List<Card>();
+        _win_status = WIN_STATUS.NONE;
+        #endregion
 
-		#endregion
 
+        #region graphics
 
-		#region graphics
-
-		prev_order_layer = 0;
+        prev_order_layer = 0;
         prev_pos.x = -0.2f;
 
         #endregion
@@ -48,11 +60,12 @@ public abstract class Pack : MonoBehaviour
         return final_value;
     }
 
-    public void addCard(Card card)
+    public virtual void addCard(Card card)
     {
         cards.Add(card);
         addcardgui(card);
         calculateTotal();
+        updateGraphics();
     }
 
     protected void calculateTotal()
@@ -72,13 +85,44 @@ public abstract class Pack : MonoBehaviour
         checkWinStatus();
     }
 
-    public void resetDeck(List<Card> finished_deck)
+    protected virtual void checkWinStatus()
+    {
+        if (total1 > 21)
+        {
+            win_status = WIN_STATUS.BUST;
+            state = STATE.STAYED;
+            final_value = total1;
+            return;
+        }
+
+        if (total1 == 21 || total2 == 21)
+        {
+            win_status = WIN_STATUS.BLACKJACK;
+            state = STATE.STAYED;
+            final_value = 21;
+            return;
+        }
+
+        if (total2 > 21)
+        {
+            final_value = total1;
+        }
+        else
+        {
+            final_value = total2;
+        }
+
+        win_status = WIN_STATUS.NONE;
+    }
+
+    public virtual void resetDeck(List<Card> finished_deck)
     {
 		#region value
 
 		total1 = 0;
         total2 = 0;
         state = STATE.PLAYING;
+        _win_status = WIN_STATUS.NONE;
         finished_deck.AddRange(cards);
         cards.Clear();
 
