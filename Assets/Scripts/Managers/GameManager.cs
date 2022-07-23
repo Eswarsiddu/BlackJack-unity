@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class GameManager : DeckManager
 {
-
+    [SerializeField]private Transform cardparent;
     void Start()
     {
-		initializeDeck();
+        Constants.offsiteCardsParent = cardparent;
+        initializeDeck();
     }
-
 }

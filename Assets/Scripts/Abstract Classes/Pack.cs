@@ -8,7 +8,7 @@ public abstract class Pack : MonoBehaviour
 
     protected int total1;
 	protected int total2;
-	protected int final_value;
+	protected int _final_value;
 	protected List<Card> cards;
     protected STATE state;
 
@@ -36,7 +36,7 @@ public abstract class Pack : MonoBehaviour
 
 		total1 = 0;
         total2 = 0;
-        final_value = 0;
+        _final_value = 0;
         cards = new List<Card>();
         _win_status = WIN_STATUS.NONE;
         #endregion
@@ -55,10 +55,7 @@ public abstract class Pack : MonoBehaviour
         state = STATE.STAYED;
     }
 
-    public int getFinal_value()
-    {
-        return final_value;
-    }
+    public int final_value { get => _final_value; }
 
     public virtual void addCard(Card card)
     {
@@ -91,7 +88,7 @@ public abstract class Pack : MonoBehaviour
         {
             win_status = WIN_STATUS.BUST;
             state = STATE.STAYED;
-            final_value = total1;
+            _final_value = total1;
             return;
         }
 
@@ -99,17 +96,17 @@ public abstract class Pack : MonoBehaviour
         {
             win_status = WIN_STATUS.BLACKJACK;
             state = STATE.STAYED;
-            final_value = 21;
+            _final_value = 21;
             return;
         }
 
         if (total2 > 21)
         {
-            final_value = total1;
+            _final_value = total1;
         }
         else
         {
-            final_value = total2;
+            _final_value = total2;
         }
 
         win_status = WIN_STATUS.NONE;
@@ -149,7 +146,7 @@ public abstract class Pack : MonoBehaviour
     [SerializeField] private TextMeshProUGUI final_value_text;
 
     [SerializeField] private Transform parent_deck;
-    [SerializeField] private Vector3 prev_pos;
+    private Vector3 prev_pos;
     private int prev_order_layer;
 
     private void addcardgui(Card card)
@@ -170,7 +167,7 @@ public abstract class Pack : MonoBehaviour
 	{
         finalscore.SetActive(true);
         twotoals.SetActive(false);
-        final_value_text.text = final_value.ToString();
+        final_value_text.text = _final_value.ToString();
     }
 
     private void settwoScores()

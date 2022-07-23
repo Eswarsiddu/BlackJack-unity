@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using System;
 
 public abstract class DeckManager : MonoBehaviour
 {
-
+    private int betamount;
     private Stack<Card> cards;
     private List<Card> finished_cards;
     private bool deal_end;
@@ -18,6 +20,7 @@ public abstract class DeckManager : MonoBehaviour
 
     const string IMAGESPATH = "PlayingCards";
     [SerializeField] private GameObject card_prefab;
+    [SerializeField] private TextMeshProUGUI playerwintext;
 
     protected void initializeDeck()
 	{
@@ -42,25 +45,79 @@ public abstract class DeckManager : MonoBehaviour
             card.GenerateCard(sprite,number);
             cards.Push(card);
 		}
+        cards.Shuffle();
+    }
+
+    private void resetDeck()
+	{
+        player_deck.resetDeck(finished_cards);
+        dealer_deck.resetDeck(finished_cards);
+        if(cards.Count <= 15)
+		{
+            foreach(Card finished_card in finished_cards){
+                cards.Push(finished_card);
+			}
+            finished_cards.Clear();
+            // TODO: play animation
+		}
     }
 
     private void playerAddCard()
-	{
+    {
         player_deck.addCard(cards.Pop());
-	}
+    }
 
     private void dealerAddCard()
 	{
         dealer_deck.addCard(cards.Pop());
     }
 
+    private void playDealer()
+	{
+        dealer_deck.playerStayed();
+        player_deck.playerStayed();
+        while(dealer_deck.final_value < 17)
+		{
+            dealerAddCard();
+		}
+        if(dealer_deck.final_value > 21 || player_deck.final_value > dealer_deck.final_value)
+		{
+            player_deck.win_status = WIN_STATUS.WIN;
+		}
+        else if(player_deck.final_value == dealer_deck.final_value)
+		{
+            player_deck.win_status = WIN_STATUS.PUSH;
+		}
+		else
+		{
+            player_deck.win_status = WIN_STATUS.LOSE;
+		}
+        dealEnd();
+	}
+
     private void dealEnd()
 	{
-        //dealer_deck.finishedDeal();
-        //player_deck.finishedDeal();
-    }
+        // TODO: dealer_deck.finishedDeal();
+        // TODO: player_deck.finishedDeal();
+        playerwintext.text = player_deck.win_status.ToString();
+		switch (player_deck.win_status)
+		{
+			case WIN_STATUS.WIN:
+            case WIN_STATUS.BLACKJACK:
+                doublebetMoney();
+                takeBetMoney();
+                break;
+            case WIN_STATUS.PUSH:
+                takeBetMoney();
+                break;
+            case WIN_STATUS.BUST:
+            case WIN_STATUS.LOSE:
+                removeBetMoney();
+                break;
+		}
+	}
 
-    private void checkWinStatus()
+	private void checkInitialWinStatus()
 	{
         WIN_STATUS player_win_status = player_deck.win_status;
 
@@ -70,6 +127,23 @@ public abstract class DeckManager : MonoBehaviour
         }
 	}
 
+    private void checkPostWinStatus()
+	{
+        WIN_STATUS player_win_status = player_deck.win_status;
+
+        if(player_win_status == WIN_STATUS.BUST)
+		{
+            dealEnd();
+            return;
+		}
+
+        if(player_win_status == WIN_STATUS.BLACKJACK)
+		{
+            playDealer();
+		}
+
+    }
+
 	public void startDeal()
 	{
         playerAddCard();
@@ -78,16 +152,37 @@ public abstract class DeckManager : MonoBehaviour
         playerAddCard();
         dealerAddCard();
 
-        checkWinStatus();
+        checkInitialWinStatus();
     }
 
     public void playerHit()
     {
-
+        playerAddCard();
+        checkPostWinStatus();
     }
 
     public void playerStay()
     {
-
+        playDealer();
     }
+
+
+	#region Bet Amount
+
+	private void removeBetMoney()
+    {
+        betamount = 0;
+    }
+
+    private void takeBetMoney()
+    {
+        // TODO: Add betmoney to player coins
+    }
+
+    private void doublebetMoney()
+    {
+        betamount = betamount * 2;
+    }
+
+	#endregion
 }

@@ -37,6 +37,8 @@ public class Card : MonoBehaviour
 	private void Start()
 	{
         renderer = GetComponent<SpriteRenderer>();
+		transform.parent = Constants.offsiteCardsParent;
+		transform.position = Vector3.zero;
 	}
 
 	public void GenerateCard(Sprite sprite, int number)
@@ -70,7 +72,8 @@ public class Card : MonoBehaviour
 	public void ResetCard()
 	{
 		faceDown();
-		parent = Constants.finisheddeckparent;
+		parent = Constants.offsiteCardsParent;
+		transform.position = Vector3.zero;
 		gameObject.SetActive(false);
 		orderinlayer = 0;
 	}

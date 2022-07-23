@@ -1,21 +1,39 @@
-using UnityEngine;
-public class Constants
-{
-    public static string getCardNumber(int value)
-    {
-		switch (value)
-		{
-            case 1: return "A";
-            case 11: return "J";
-            case 12:return "Q";
-            case 13:return "K";
-		}
-        return value.ToString();
-    }
 
-    public static string[] CARD_NUMBERS = { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+public static class Constants
+{
+
+    private static System.Random rng = new System.Random();
 
     public static Sprite CARDBACKSPRITE;
 
-    public static Transform finisheddeckparent;
+    public static Transform offsiteCardsParent;
+
+
+    public static void Shuffle<T>(this Stack<T> stack)
+    {
+        List<T> l = new List<T>();
+        int n = stack.Count;
+        for(int i = 0; i < n; i++)
+		{
+            l.Add(stack.Pop());
+		}
+        T value;
+        int k;
+		while (n > 1)
+		{
+            n--;
+            k = rng.Next(n + 1);
+            value = l[k];
+            l[k] = l[n];
+            l[n] = value;
+		}
+		foreach (T t in l)
+		{
+            stack.Push(t);
+		}
+        l.Clear();
+    }
 }
