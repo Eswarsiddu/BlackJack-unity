@@ -49,13 +49,14 @@ public abstract class DeckManager : MonoBehaviour
             cards.Push(card);
 		}
         cards.Shuffle();
+        printStack();
     }
 
-    private void resetDeck()
+    protected void resetDeck()
 	{
         player_deck.resetDeck(finished_cards);
         dealer_deck.resetDeck(finished_cards);
-        if(cards.Count <= 15)
+        if (cards.Count <= 15)
 		{
             foreach(Card finished_card in finished_cards){
                 cards.Push(finished_card);
@@ -63,16 +64,20 @@ public abstract class DeckManager : MonoBehaviour
             finished_cards.Clear();
             // TODO: play animation
 		}
+        startDeal(); // TODO: change this triiger to bet placement
+
     }
 
     private void playerAddCard()
     {
         player_deck.addCard(cards.Pop());
+        printStack();
     }
 
     private void dealerAddCard()
 	{
         dealer_deck.addCard(cards.Pop());
+        printStack();
     }
 
     private void playDealer()
@@ -149,6 +154,8 @@ public abstract class DeckManager : MonoBehaviour
 
 	public void startDeal()
 	{
+        playerwintext.text = "";
+
         playerAddCard();
         dealerAddCard();
 
@@ -186,6 +193,20 @@ public abstract class DeckManager : MonoBehaviour
     {
         betamount = betamount * 2;
     }
+
+	#endregion
+
+	#region Test
+
+    private void printStack()
+	{
+        string s = "";
+        foreach(Card card in cards)
+		{
+            s += card.ToString()+",";
+		}
+        Debug.Log(s);
+	}
 
 	#endregion
 }

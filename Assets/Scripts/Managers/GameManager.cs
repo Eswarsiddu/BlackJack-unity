@@ -36,7 +36,10 @@ public class GameManager : DeckManager
         {
             StayButton.onClick.Invoke();
         }
-
+		if (Input.GetKeyDown(KeyCode.R))
+		{
+            resetDeck();
+		}
     }
 	#endregion
 

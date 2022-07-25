@@ -60,10 +60,7 @@ public abstract class Pack : MonoBehaviour
 
     public virtual void addCard(Card card)
     {
-        if(cards == null)
-		{
-            Debug.Log("cards list is null");
-		}
+        card.gameObject.SetActive(true);
         cards.Add(card);
         addcardgui(card);
         calculateTotal();
@@ -125,8 +122,6 @@ public abstract class Pack : MonoBehaviour
         total2 = 0;
         state = STATE.PLAYING;
         _win_status = WIN_STATUS.NONE;
-        finished_deck.AddRange(cards);
-        cards.Clear();
 
         #endregion
 
@@ -136,8 +131,16 @@ public abstract class Pack : MonoBehaviour
         prev_order_layer = 0;
         prev_pos.x = -0.2f;
 
-		#endregion
-	}
+        #endregion
+
+        foreach(Card card in cards)
+		{
+            card.ResetCard();
+            finished_deck.Add(card);
+		}
+
+        cards.Clear();
+    }
 
     #endregion
 

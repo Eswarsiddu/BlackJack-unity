@@ -75,4 +75,13 @@ public class Card : MonoBehaviour
 	}
 
 	#endregion
+
+	#region Test
+
+	public override string ToString()
+	{
+		return value.ToString();
+	}
+
+	#endregion
 }
