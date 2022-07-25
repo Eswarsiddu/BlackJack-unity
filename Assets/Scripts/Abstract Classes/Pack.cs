@@ -158,11 +158,13 @@ public abstract class Pack : MonoBehaviour
 	{
         card.parent = parent_deck;
         prev_pos.x += 0.2f;
+        card.transform.localPosition = prev_pos;
         card.orderinlayer = prev_order_layer++;
 	}
 
     private void updateDeck()
 	{
+        Debug.Log("Hpdating deck");
         Vector3  pos = parent_deck.position;
         pos.x = -prev_pos.x / 4;
         parent_deck.position = pos;

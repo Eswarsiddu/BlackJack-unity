@@ -597,7 +597,7 @@ GameObject:
   m_Layer: 0
   m_Name: Deck
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -835,6 +835,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 828427587}
+        m_TargetAssemblyTypeName: DeckManager, Assembly-CSharp
+        m_MethodName: startDeal
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 2143892387}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
@@ -1355,6 +1367,10 @@ MonoBehaviour:
   card_prefab: {fileID: 519938341596963386, guid: 4edd710077004e6468df64375bd039d4, type: 3}
   playerwintext: {fileID: 490551019}
   cardparent: {fileID: 1206432044}
+  card_back_sprite: {fileID: 21300000, guid: 35b1aa564e0affa44b391cd24c36727c, type: 3}
+  PlayButton: {fileID: 504766957}
+  HitButton: {fileID: 915417039}
+  StayButton: {fileID: 725181959}
 --- !u!1 &851557022
 GameObject:
   m_ObjectHideFlags: 0
@@ -2216,7 +2232,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1206432044
 Transform:
   m_ObjectHideFlags: 0
@@ -2591,7 +2607,7 @@ GameObject:
   m_Layer: 0
   m_Name: Deck
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 7422848464349959988, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1

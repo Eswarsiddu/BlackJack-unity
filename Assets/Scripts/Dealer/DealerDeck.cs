@@ -34,4 +34,9 @@ public class DealerDeck : Pack
 		base.addCard(card);
 	}
 
+	public override void playerStayed()
+	{
+		base.playerStayed();
+		cards[0].faceUp();
+	}
 }

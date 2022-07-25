@@ -55,18 +55,6 @@ public class Card : MonoBehaviour
 
 	private void updateCardImage()
 	{
-		if(renderer == null)
-		{
-			Debug.Log("renderer is null");
-		}
-		if(sprite == null)
-		{
-			Debug.Log("sprite is null");
-		}
-		if (Constants.CARDBACKSPRITE)
-		{
-			Debug.Log("card back sprite is null"); ;
-		}
 		renderer.sprite = face_down ? Constants.CARDBACKSPRITE : sprite;
 	}
 
