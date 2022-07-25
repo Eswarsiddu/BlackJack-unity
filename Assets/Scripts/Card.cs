@@ -34,16 +34,12 @@ public class Card : MonoBehaviour
 	private SpriteRenderer renderer;
     private Sprite sprite;
 
-	private void Start()
-	{
-        renderer = GetComponent<SpriteRenderer>();
-		transform.parent = Constants.offsiteCardsParent;
-		transform.position = Vector3.zero;
-	}
-
 	public void GenerateCard(Sprite sprite, int number)
 	{
-        this.sprite = sprite;
+		renderer = GetComponent<SpriteRenderer>();
+		transform.parent = Constants.offsiteCardsParent;
+		transform.position = Vector3.zero;
+		this.sprite = sprite;
         if(number >= 10)
 		{
             _value = 10;
@@ -59,6 +55,18 @@ public class Card : MonoBehaviour
 
 	private void updateCardImage()
 	{
+		if(renderer == null)
+		{
+			Debug.Log("renderer is null");
+		}
+		if(sprite == null)
+		{
+			Debug.Log("sprite is null");
+		}
+		if (Constants.CARDBACKSPRITE)
+		{
+			Debug.Log("card back sprite is null"); ;
+		}
 		renderer.sprite = face_down ? Constants.CARDBACKSPRITE : sprite;
 	}
 

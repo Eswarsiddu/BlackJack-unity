@@ -27,6 +27,9 @@ public abstract class DeckManager : MonoBehaviour
         cards = new Stack<Card>();
         deal_end = false;
         finished_cards = new List<Card>();
+        player_deck.initializePack();
+        dealer_deck.initializePack();
+        playerwintext.text = "";
         generateDeck();
 	}
     
@@ -42,7 +45,7 @@ public abstract class DeckManager : MonoBehaviour
             int number = int.Parse(name.Substring(name.Length - 2));
             GameObject temp = Instantiate(card_prefab);
             temp.TryGetComponent<Card>(out Card card);
-            card.GenerateCard(sprite,number);
+            card.GenerateCard(sprite,number);       
             cards.Push(card);
 		}
         cards.Shuffle();

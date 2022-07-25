@@ -38,6 +38,7 @@ public abstract class Pack : MonoBehaviour
         total2 = 0;
         _final_value = 0;
         cards = new List<Card>();
+
         _win_status = WIN_STATUS.NONE;
         #endregion
 
@@ -59,6 +60,10 @@ public abstract class Pack : MonoBehaviour
 
     public virtual void addCard(Card card)
     {
+        if(cards == null)
+		{
+            Debug.Log("cards list is null");
+		}
         cards.Add(card);
         addcardgui(card);
         calculateTotal();
@@ -139,11 +144,11 @@ public abstract class Pack : MonoBehaviour
     #region Graphics
 
     [SerializeField] private GameObject twotoals;
-	[SerializeField] private TextMeshProUGUI total1_text;
-    [SerializeField] private TextMeshProUGUI total2_text;
+	[SerializeField] private TextMeshPro total1_text;
+    [SerializeField] private TextMeshPro total2_text;
 
     [SerializeField] private GameObject finalscore;
-    [SerializeField] private TextMeshProUGUI final_value_text;
+    [SerializeField] private TextMeshPro final_value_text;
 
     [SerializeField] private Transform parent_deck;
     private Vector3 prev_pos;

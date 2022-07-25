@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : DeckManager
 {
     [SerializeField]private Transform cardparent;
-    void Start()
+    void Awake()
     {
         Constants.offsiteCardsParent = cardparent;
         initializeDeck();
