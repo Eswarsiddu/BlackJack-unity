@@ -12,6 +12,8 @@ public abstract class Pack : MonoBehaviour
 	protected List<Card> cards;
     protected STATE state;
 
+    [SerializeField] private GameObject scoreobject;
+
     private WIN_STATUS _win_status;
 
     public WIN_STATUS win_status
@@ -47,8 +49,11 @@ public abstract class Pack : MonoBehaviour
 
         prev_order_layer = 0;
         prev_pos.x = -0.2f;
+        scoreobject.SetActive(false);
 
         #endregion
+
+        RemoveTestCard();
     }
 
     public void Stayed()
@@ -130,10 +135,11 @@ public abstract class Pack : MonoBehaviour
 
         prev_order_layer = 0;
         prev_pos.x = -0.2f;
+        scoreobject.SetActive(false);
 
         #endregion
 
-        foreach(Card card in cards)
+        foreach (Card card in cards)
 		{
             card.ResetCard();
             finished_deck.Add(card);
@@ -157,8 +163,14 @@ public abstract class Pack : MonoBehaviour
     private Vector3 prev_pos;
     private int prev_order_layer;
 
+    private void EnableScore()
+	{
+        scoreobject.SetActive(true);
+	}
+
     private void addcardgui(Card card)
 	{
+        EnableScore();
         card.parent = parent_deck;
         prev_pos.x += 0.2f;
         card.transform.localPosition = prev_pos;
@@ -167,7 +179,6 @@ public abstract class Pack : MonoBehaviour
 
     private void updateDeck()
 	{
-        Debug.Log("Hpdating deck");
         Vector3  pos = parent_deck.position;
         pos.x = -prev_pos.x / 4;
         parent_deck.position = pos;
@@ -221,6 +232,21 @@ public abstract class Pack : MonoBehaviour
         virtualupdateGraphics();
 	}
     protected virtual void virtualupdateGraphics(){}
+
+    #endregion
+
+
+
+    #region Testing
+
+    [Header("\n\nTesing")]
+    public GameObject testingcard;
+
+
+    public void RemoveTestCard()
+	{
+        Destroy(testingcard);
+	}
 
 	#endregion
 

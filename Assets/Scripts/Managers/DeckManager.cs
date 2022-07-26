@@ -1,17 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 using System;
+using TMPro;
 
 public abstract class DeckManager : MonoBehaviour
 {
-    private int betamount;
+    private const float WAITING_TIME = 3f;
+
+    private int _betamount;
     private Stack<Card> cards;
     private List<Card> finished_cards;
-    private bool deal_end;
-    
+    public Action nextDeal;
+    public Action dealEnded;
+
+    public int betamount { 
+        set 
+        { 
+            _betamount = value;
+            PlayerData.decreaseCoins(value);
+        } 
+    }
+
     [SerializeField] private PlayerDeck player_deck;
     [SerializeField] private DealerDeck dealer_deck;
 
@@ -25,7 +35,6 @@ public abstract class DeckManager : MonoBehaviour
     protected void initializeDeck()
 	{
         cards = new Stack<Card>();
-        deal_end = false;
         finished_cards = new List<Card>();
         player_deck.initializePack();
         dealer_deck.initializePack();
@@ -54,8 +63,10 @@ public abstract class DeckManager : MonoBehaviour
 
     protected void resetDeck()
 	{
+        playerwintext.text = "";
         player_deck.resetDeck(finished_cards);
         dealer_deck.resetDeck(finished_cards);
+        betamount = 0;
         if (cards.Count <= 15)
 		{
             foreach(Card finished_card in finished_cards){
@@ -64,8 +75,7 @@ public abstract class DeckManager : MonoBehaviour
             finished_cards.Clear();
             // TODO: play animation
 		}
-        startDeal(); // TODO: change this triiger to bet placement
-
+        nextDeal();
     }
 
     private void playerAddCard()
@@ -107,6 +117,7 @@ public abstract class DeckManager : MonoBehaviour
 	{
         // TODO: dealer_deck.finishedDeal();
         // TODO: player_deck.finishedDeal();
+        dealEnded(); // For disabling Dealing buttons on screen
         playerwintext.text = player_deck.win_status.ToString();
 		switch (player_deck.win_status)
 		{
@@ -123,6 +134,13 @@ public abstract class DeckManager : MonoBehaviour
                 removeBetMoney();
                 break;
 		}
+        StartCoroutine(DealEndEnumerator());
+	}
+
+    private IEnumerator DealEndEnumerator()
+	{
+        yield return new WaitForSeconds(WAITING_TIME);
+        resetDeck();
 	}
 
 	private void checkInitialWinStatus()
@@ -154,7 +172,6 @@ public abstract class DeckManager : MonoBehaviour
 
 	public void startDeal()
 	{
-        playerwintext.text = "";
 
         playerAddCard();
         dealerAddCard();
@@ -181,17 +198,17 @@ public abstract class DeckManager : MonoBehaviour
 
 	private void removeBetMoney()
     {
-        betamount = 0;
+        _betamount = 0;
     }
 
     private void takeBetMoney()
     {
-        // TODO: Add betmoney to player coins
+        PlayerData.increaseCoins(_betamount);
     }
 
     private void doublebetMoney()
     {
-        betamount = betamount * 2;
+        _betamount = _betamount * 2;
     }
 
 	#endregion
