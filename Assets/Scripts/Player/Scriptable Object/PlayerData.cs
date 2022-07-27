@@ -7,26 +7,19 @@ public class PlayerData : ScriptableObject
 {
 	[SerializeField] private int _coins;
 
-	public static event EventHandler UpdateCoins;
+	public event EventHandler UpdateCoins;
 
-	private static PlayerData _this;
+	public int coins { get => _coins; }
 
-	public static int coins { get => _this._coins; }
-
-	public PlayerData()
+	public void increaseCoins(int amount)
 	{
-		_this= this;
-	}
-
-	public static void increaseCoins(int amount)
-	{
-		_this._coins += amount;
+		_coins += amount;
 		UpdateCoins.Invoke(null,EventArgs.Empty);
 	}
 
-	public static void decreaseCoins(int amount)
+	public void decreaseCoins(int amount)
 	{
-		_this._coins -= amount;
+		_coins -= amount;
 		UpdateCoins.Invoke(null, EventArgs.Empty);
 	}
 }
