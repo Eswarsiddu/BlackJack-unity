@@ -5,24 +5,25 @@ using System;
 public class HomeScreen : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI coins_text;
+	[SerializeField] private PlayerData playerdata;
 
 	void Start()
 	{
-		PlayerData.increaseCoins(0);
+		playerdata.increaseCoins(0);
 	}
 
 	private void OnEnable()
 	{
-		PlayerData.UpdateCoins += UpdateCoinsText;
+		playerdata.UpdateCoins += UpdateCoinsText;
 	}
 
 	private void OnDisable()
 	{
-		PlayerData.UpdateCoins -= UpdateCoinsText;
+		playerdata.UpdateCoins -= UpdateCoinsText;
 	}
 
 	private void UpdateCoinsText(object sender, EventArgs e)
 	{
-        coins_text.text = PlayerData.coins.ToString();
+        coins_text.text = playerdata.coins.ToString();
 	}
 }

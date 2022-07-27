@@ -11,6 +11,8 @@ public class GameScreen : MonoBehaviour
 	[SerializeField] private Scrollbar scrollbar;
 	[SerializeField] private Button backbutton;
 
+	[SerializeField] private PlayerData playerdata;
+
 	private int minvalue;
 	private int maxvalue; // TODO: Set min and values of table based on coins
 	// TODO: OR Keep Poker Coins
@@ -27,7 +29,7 @@ public class GameScreen : MonoBehaviour
 
 	void Start()
 	{
-		PlayerData.increaseCoins(0);
+		playerdata.increaseCoins(0);
 		deckmanager.nextDeal = nextDeal;
 		deckmanager.dealEnded = dealEnd;
 	}
@@ -40,13 +42,13 @@ public class GameScreen : MonoBehaviour
 
 	private void OnEnable()
 	{
-		PlayerData.UpdateCoins += UpdateCoinsText;
+		playerdata.UpdateCoins += UpdateCoinsText;
 		nextDeal();
 	}
 
 	private void OnDisable()
 	{
-		PlayerData.UpdateCoins -= UpdateCoinsText;
+		playerdata.UpdateCoins -= UpdateCoinsText;
 	}
 
 	public void StartDeal()
@@ -67,8 +69,8 @@ public class GameScreen : MonoBehaviour
 	{
 		betarea.SetActive(true);
 		dealarea.SetActive(false);
-		minvalue = (int)(PlayerData.coins * PRECENT);
-		maxvalue = (int)(PlayerData.coins * (1 - PRECENT));
+		minvalue = (int)(playerdata.coins * PRECENT);
+		maxvalue = (int)(playerdata.coins * (1 - PRECENT));
 		min_text.text = minvalue.ToString();
 		max_text.text = maxvalue.ToString();
 		CalculateBetAmount();
@@ -76,7 +78,7 @@ public class GameScreen : MonoBehaviour
 
 	private void UpdateCoinsText(object sender, EventArgs e)
 	{
-		coins_text.text = PlayerData.coins.ToString();
+		coins_text.text = playerdata.coins.ToString();
 		// TODO : Include Graphics
 	}
 

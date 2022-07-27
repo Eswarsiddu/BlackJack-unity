@@ -13,12 +13,13 @@ public abstract class DeckManager : MonoBehaviour
     private List<Card> finished_cards;
     public Action nextDeal;
     public Action dealEnded;
+    [SerializeField] private PlayerData playerdata;
 
     public int betamount { 
         set 
         { 
             _betamount = value;
-            PlayerData.decreaseCoins(value);
+            playerdata.decreaseCoins(value);
         } 
     }
 
@@ -203,7 +204,7 @@ public abstract class DeckManager : MonoBehaviour
 
     private void takeBetMoney()
     {
-        PlayerData.increaseCoins(_betamount);
+        playerdata.increaseCoins(_betamount);
     }
 
     private void doublebetMoney()

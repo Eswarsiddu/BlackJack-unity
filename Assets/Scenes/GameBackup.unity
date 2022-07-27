@@ -1878,6 +1878,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51eb464c6fe648c4186d051296c4014c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerdata: {fileID: 11400000, guid: 7244dd18407f0cf4a8ceefe43290c830, type: 2}
   player_deck: {fileID: 511028009}
   dealer_deck: {fileID: 1462931701}
   hit_button: {fileID: 915417037}
@@ -3712,6 +3713,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coins_text: {fileID: 308641435}
+  playerdata: {fileID: 11400000, guid: 7244dd18407f0cf4a8ceefe43290c830, type: 2}
 --- !u!1 &1487422941
 GameObject:
   m_ObjectHideFlags: 0
@@ -5582,6 +5584,7 @@ MonoBehaviour:
   coins_text: {fileID: 1147322817}
   scrollbar: {fileID: 887061328}
   backbutton: {fileID: 1839846918}
+  playerdata: {fileID: 11400000, guid: 7244dd18407f0cf4a8ceefe43290c830, type: 2}
   min_text: {fileID: 342192635}
   max_text: {fileID: 1196674777}
   bet_text: {fileID: 1582712390}
