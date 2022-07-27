@@ -9,6 +9,8 @@ public class CrditsScreen : MonoBehaviour
     
     void Start()
     {
+        back.onClick.AddListener(SoundManager.PlayUIElementClickSound);
+        back.onClick.AddListener(HapticManager.ShortVibration);
         back.onClick.AddListener(CloseScreen);
     }
 

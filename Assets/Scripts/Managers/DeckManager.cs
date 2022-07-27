@@ -74,6 +74,8 @@ public abstract class DeckManager : MonoBehaviour
                 cards.Push(finished_card);
 			}
             finished_cards.Clear();
+            SoundManager.PlayShuffleSound();
+            cards.Shuffle();
             // TODO: play animation
 		}
         nextDeal();
@@ -81,12 +83,14 @@ public abstract class DeckManager : MonoBehaviour
 
     private void playerAddCard()
     {
+        SoundManager.PlayCardMovingSound();
         player_deck.addCard(cards.Pop());
         printStack();
     }
 
     private void dealerAddCard()
 	{
+        SoundManager.PlayCardMovingSound();
         dealer_deck.addCard(cards.Pop());
         printStack();
     }
@@ -183,14 +187,16 @@ public abstract class DeckManager : MonoBehaviour
         checkInitialWinStatus();
     }
 
-    public void playerHit()
+    public void playerHit() // UI Button
     {
+        SoundManager.PlayUIElementClickSound();
         playerAddCard();
         checkPostWinStatus();
     }
 
-    public void playerStay()
+    public void playerStay() // UI Button
     {
+        SoundManager.PlayUIElementClickSound();
         playDealer();
     }
 

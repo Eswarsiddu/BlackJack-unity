@@ -9,7 +9,7 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private Button sound;
 
     private Color defaultcolor;
-    [SerializeField] private Color changedcolor;
+    [SerializeField] private Color changed_color;
 
     void Start()
     {
@@ -25,12 +25,10 @@ public class SettingsManager : MonoBehaviour
         if (settings.haptic)
 		{
             haptic.GetComponent<Image>().color = defaultcolor;
-            StartHaptic();
 		}
 		else
 		{
-            haptic.GetComponent<Image>().color = changedcolor;
-            StopHaptic();
+            haptic.GetComponent<Image>().color = changed_color;
         }
     }
 
@@ -43,17 +41,18 @@ public class SettingsManager : MonoBehaviour
         }
         else
         {
-            sound.GetComponent<Image>().color = changedcolor;
+            sound.GetComponent<Image>().color = changed_color;
             Stopsound();
         }
     }
 
     public void ToggleHaptic() // UI Button
 	{
-        Debug.Log("Toggle Haptic");
+        SoundManager.PlayUIElementClickSound();
         settings.ToggleHaptic();
         UpdateHapticGraphics();
-	}
+        HapticManager.MediumVibration();
+    }
 
     public void ToggleSound() // UI Button
     {
@@ -63,22 +62,12 @@ public class SettingsManager : MonoBehaviour
 
     public void StartSound()
 	{
-
+        SoundManager.PlayBackground();
 	}
 
     public void Stopsound()
 	{
-
-	}
-
-    public void StartHaptic()
-	{
-        
-	}
-
-    public void StopHaptic()
-	{
-
+        SoundManager.StopBackground();
 	}
 
 }

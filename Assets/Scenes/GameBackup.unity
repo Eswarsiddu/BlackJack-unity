@@ -1766,6 +1766,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 828427587}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: PlayUIClickSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &504766958
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2245,7 +2257,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &798868249
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2330,6 +2342,8 @@ GameObject:
   - component: {fileID: 828427585}
   - component: {fileID: 828427587}
   - component: {fileID: 828427588}
+  - component: {fileID: 828427589}
+  - component: {fileID: 828427590}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2391,7 +2405,43 @@ MonoBehaviour:
   settings: {fileID: 11400000, guid: 7951fcbf5004717498d56abc28ee5d63, type: 2}
   haptic: {fileID: 1435432262}
   sound: {fileID: 985801462}
-  changedcolor: {r: 1, g: 0, b: 0, a: 1}
+  changed_color: {r: 0, g: 0, b: 0, a: 0}
+--- !u!114 &828427589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 828427584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2e10abb8ca16184094cf443df4d2412, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  background_sound: {fileID: 0}
+  card_moving_sound: {fileID: 0}
+  shuffle_sound: {fileID: 0}
+  ui_button_sounds: {fileID: 0}
+  win_status_voice: {fileID: 0}
+  WIN_VOICE: {fileID: 0}
+  BLACKJACK_VOICE: {fileID: 0}
+  PUSH_VOICE: {fileID: 0}
+  LOSE_VOICE: {fileID: 0}
+  BUST_VOICE: {fileID: 0}
+  settings: {fileID: 11400000, guid: 7951fcbf5004717498d56abc28ee5d63, type: 2}
+--- !u!114 &828427590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 828427584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3275c2de90d156646b39e34c73cd703f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  settings: {fileID: 11400000, guid: 7951fcbf5004717498d56abc28ee5d63, type: 2}
 --- !u!1 &851557022
 GameObject:
   m_ObjectHideFlags: 0
@@ -4821,6 +4871,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 828427587}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: PlayUIClickSound
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

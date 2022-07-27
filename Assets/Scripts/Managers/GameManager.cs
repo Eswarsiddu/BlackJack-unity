@@ -13,6 +13,26 @@ public class GameManager : DeckManager
     }
 
 
+    public void PlayUIClickSound()
+	{
+        SoundManager.PlayUIElementClickSound();
+	}
+
+    public void ShortVibration()
+	{
+        HapticManager.ShortVibration();
+	}
+
+    public void MediumVibration()
+    {
+        HapticManager.MediumVibration();
+    }
+
+    public void LongVibration()
+    {
+        HapticManager.LongVibration();
+    }
+
     #region Testing
     [Header("\n\nTesting")]
     public Button PlayButton;
