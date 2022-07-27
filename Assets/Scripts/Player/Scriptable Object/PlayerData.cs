@@ -13,7 +13,7 @@ public class PlayerData : ScriptableObject
 
 	public static int coins { get => _this._coins; }
 
-	PlayerData()
+	public PlayerData()
 	{
 		_this= this;
 	}

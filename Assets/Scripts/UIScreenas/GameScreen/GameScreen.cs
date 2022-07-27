@@ -9,6 +9,7 @@ public class GameScreen : MonoBehaviour
 	[SerializeField] private TextMeshProUGUI coins_text;
 
 	[SerializeField] private Scrollbar scrollbar;
+	[SerializeField] private Button backbutton;
 
 	private int minvalue;
 	private int maxvalue; // TODO: Set min and values of table based on coins
@@ -79,6 +80,12 @@ public class GameScreen : MonoBehaviour
 		// TODO : Include Graphics
 	}
 
-
+	private void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.Escape))
+		{
+			backbutton.onClick.Invoke();
+		}
+	}
 
 }
