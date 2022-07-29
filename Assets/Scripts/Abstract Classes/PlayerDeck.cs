@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public abstract class Pack : MonoBehaviour
+public class PlayerDeck : MonoBehaviour
 {
 
     protected int total1;
@@ -62,8 +62,15 @@ public abstract class Pack : MonoBehaviour
 
     public int final_value { get => _final_value; }
 
-    public virtual void addCard(Card card)
+    protected virtual void ChangeCardState(Card card)
+	{
+        card.faceUp();
+	}
+
+
+    public void addCard(Card card)
     {
+        ChangeCardState(card);
         card.gameObject.SetActive(true);
         cards.Add(card);
         addcardgui(card);

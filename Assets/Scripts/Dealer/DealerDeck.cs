@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-public class DealerDeck : Pack
+public class DealerDeck : PlayerDeck
 {
 
 	private bool first_card;
@@ -17,7 +17,7 @@ public class DealerDeck : Pack
 		base.resetDeck(finished_deck);
 	}
 
-	public override void addCard(Card card)
+	protected override void ChangeCardState(Card card)
 	{
 		if (first_card)
 		{
@@ -28,8 +28,6 @@ public class DealerDeck : Pack
 		{
 			card.faceUp();
 		}
-
-		base.addCard(card);
 	}
 
 	public override void playerStayed()

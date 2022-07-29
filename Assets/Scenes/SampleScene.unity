@@ -1860,7 +1860,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 511028007}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1a2773fc8823cb42aa41ccaee2acaa8, type: 3}
+  m_Script: {fileID: 11500000, guid: 04b4f07bd606aa1489cab12039e36306, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   scoreobject: {fileID: 743959518}
