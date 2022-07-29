@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CrditsScreen : MonoBehaviour
+public class CreditsScreen : MonoBehaviour
 {
 	private Button back;
 
@@ -23,7 +23,6 @@ public class CrditsScreen : MonoBehaviour
 		back.onClick.AddListener(HapticManager.Vibrate);
 		back.onClick.AddListener( () => gameObject.SetActive(false) );
 	}
-
 
 	void Update()
 	{

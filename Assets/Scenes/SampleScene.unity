@@ -2469,7 +2469,6 @@ GameObject:
   m_Component:
   - component: {fileID: 828427585}
   - component: {fileID: 828427587}
-  - component: {fileID: 828427588}
   - component: {fileID: 828427590}
   m_Layer: 0
   m_Name: GameManager
@@ -2517,22 +2516,6 @@ MonoBehaviour:
   PlayButton: {fileID: 504766957}
   HitButton: {fileID: 915417039}
   StayButton: {fileID: 725181959}
---- !u!114 &828427588
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 828427584}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3889904d715f7b3418d2e131cdc6fec4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  settings: {fileID: 11400000, guid: 7951fcbf5004717498d56abc28ee5d63, type: 2}
-  haptic: {fileID: 1435432262}
-  sound: {fileID: 985801462}
-  changed_color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &828427590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4707,6 +4690,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1259369406}
+  - component: {fileID: 1259369407}
   m_Layer: 5
   m_Name: Settings Segment
   m_TagString: Untagged
@@ -4737,6 +4721,22 @@ RectTransform:
   m_AnchoredPosition: {x: 100, y: -100}
   m_SizeDelta: {x: 180, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1259369407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1259369405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3889904d715f7b3418d2e131cdc6fec4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  settings: {fileID: 11400000, guid: 7951fcbf5004717498d56abc28ee5d63, type: 2}
+  haptic: {fileID: 1435432262}
+  sound: {fileID: 985801462}
+  changed_color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &1271638465
 GameObject:
   m_ObjectHideFlags: 0

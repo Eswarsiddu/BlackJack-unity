@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerDeck : MonoBehaviour
 {
-
     protected int total1;
 	protected int total2;
 	protected int _final_value;

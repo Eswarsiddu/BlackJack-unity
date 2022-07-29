@@ -4,6 +4,8 @@ using UnityEngine;
 public static class TAGS
 {
     public const string BACK = "Back";
+    public const string HAPTIC = "Haptic";
+    public const string SOUND = "Sound";
 }
 
 public static class Constants

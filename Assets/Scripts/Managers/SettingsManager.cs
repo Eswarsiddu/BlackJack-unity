@@ -5,13 +5,32 @@ public class SettingsManager : MonoBehaviour
 {
     [SerializeField] private Settings settings;
 
-    [SerializeField] private Button haptic;
-    [SerializeField] private Button sound;
+    private Button haptic;
+    private Button sound;
 
     private Color defaultcolor;
     [SerializeField] private Color changed_color;
 
-    void Start()
+
+	private void Awake()
+	{
+		foreach(Transform child in transform)
+		{
+			switch (child.tag)
+			{
+				case TAGS.HAPTIC:
+					haptic = child.GetComponent<Button>();
+					break;
+				case TAGS.SOUND:
+					sound = child.GetComponent<Button>();
+					break;
+				default:
+					break;
+			}
+		}
+	}
+
+	void Start()
     {
         defaultcolor = haptic.colors.normalColor;
         UpdateHapticGraphics();
