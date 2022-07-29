@@ -1,14 +1,12 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Card : MonoBehaviour
 {
 	#region Value
 	private int _value;
-    private bool face_down;
-    public int value { get => _value; }
+	private bool face_down;
+	public int value { get => _value; }
 
 	internal bool isFaceDown()
 	{
@@ -16,10 +14,10 @@ public class Card : MonoBehaviour
 	}
 
 	public void faceUp()
-    {
-        face_down = false;
-        updateCardImage();
-    }
+	{
+		face_down = false;
+		updateCardImage();
+	}
 
 	public void faceDown()
 	{
@@ -31,31 +29,31 @@ public class Card : MonoBehaviour
 
 	#region Graphics
 
-	private SpriteRenderer renderer;
-    private Sprite sprite;
+	private SpriteRenderer spriterenderer;
+	private Sprite sprite;
 
 	public void GenerateCard(Sprite sprite, int number)
 	{
-		renderer = GetComponent<SpriteRenderer>();
+		spriterenderer = GetComponent<SpriteRenderer>();
 		transform.parent = Constants.offsiteCardsParent;
 		transform.position = Vector3.zero;
 		this.sprite = sprite;
-        if(number >= 10)
+		if (number >= 10)
 		{
-            _value = 10;
+			_value = 10;
 		}
 		else
 		{
-            _value = number;
+			_value = number;
 		}
 		faceDown();
 	}
 
-	public int orderinlayer { set { renderer.sortingOrder = value; } }
+	public int orderinlayer { set { spriterenderer.sortingOrder = value; } }
 
 	private void updateCardImage()
 	{
-		renderer.sprite = face_down ? Constants.CARDBACKSPRITE : sprite;
+		spriterenderer.sprite = face_down ? Constants.CARDBACKSPRITE : sprite;
 	}
 
 	public Transform parent { set { transform.parent = value; } }

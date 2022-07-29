@@ -13,6 +13,16 @@ public class GameManager : DeckManager
     }
 
 
+    public void PlayUIClickSound()
+	{
+        SoundManager.PlayUIElementClickSound();
+	}
+
+    public void Vibrate()
+    {
+        HapticManager.Vibrate();
+    }
+
     #region Testing
     [Header("\n\nTesting")]
     public Button PlayButton;

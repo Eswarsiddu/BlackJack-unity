@@ -1,5 +1,5 @@
-using UnityEngine;
 using System;
+using UnityEngine;
 
 
 [CreateAssetMenu(menuName ="Scriptable/Playerdata",fileName ="PlayerData")]
@@ -21,5 +21,11 @@ public class PlayerData : ScriptableObject
 	{
 		_coins -= amount;
 		UpdateCoins.Invoke(null, EventArgs.Empty);
+	}
+
+	public void ResetCoins()
+	{
+		_coins = 500;
+		increaseCoins(0);
 	}
 }

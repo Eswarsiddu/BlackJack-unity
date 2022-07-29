@@ -1,23 +1,23 @@
+using System;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Scriptable/Settings",fileName = "Settings")]
+[CreateAssetMenu(menuName = "Scriptable/Settings", fileName = "Settings")]
 public class Settings : ScriptableObject
 {
-    [SerializeField] private bool _haptic;
-    [SerializeField] private bool _sound;
+	[SerializeField] private bool _haptic;
+	[SerializeField] private bool _sound;
 
-    public void ToggleHaptic()
+	public void ToggleHaptic()
 	{
-        _haptic = !_haptic;
+		_haptic = !_haptic;
 	}
 
-    public void ToggleSound()
+	public void ToggleSound()
 	{
-        _sound = !_sound;
+		_sound = !_sound;
 	}
 
-    public bool haptic { get => _haptic; }
+	public bool haptic { get => _haptic; }
 
-    public bool sound { get => _sound; }
-
+	public bool sound { get => _sound; }
 }

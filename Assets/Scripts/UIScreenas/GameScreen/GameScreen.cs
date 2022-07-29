@@ -1,6 +1,6 @@
-using UnityEngine;
-using TMPro;
 using System;
+using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class GameScreen : MonoBehaviour
@@ -32,6 +32,7 @@ public class GameScreen : MonoBehaviour
 		playerdata.increaseCoins(0);
 		deckmanager.nextDeal = nextDeal;
 		deckmanager.dealEnded = dealEnd;
+		backbutton.onClick.AddListener(SoundManager.PlayUIElementClickSound);
 	}
 
 	public void CalculateBetAmount()
@@ -53,6 +54,7 @@ public class GameScreen : MonoBehaviour
 
 	public void StartDeal()
 	{
+		SoundManager.PlayUIElementClickSound();
 		deckmanager.betamount = betamount;
 		betarea.SetActive(false);
 		dealarea.SetActive(true);

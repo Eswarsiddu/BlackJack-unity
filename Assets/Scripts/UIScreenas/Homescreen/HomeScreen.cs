@@ -1,6 +1,6 @@
-using UnityEngine;
-using TMPro;
 using System;
+using TMPro;
+using UnityEngine;
 
 public class HomeScreen : MonoBehaviour
 {
@@ -15,6 +15,7 @@ public class HomeScreen : MonoBehaviour
 	private void OnEnable()
 	{
 		playerdata.UpdateCoins += UpdateCoinsText;
+		playerdata.increaseCoins(0);
 	}
 
 	private void OnDisable()
@@ -25,5 +26,10 @@ public class HomeScreen : MonoBehaviour
 	private void UpdateCoinsText(object sender, EventArgs e)
 	{
         coins_text.text = playerdata.coins.ToString();
+	}
+
+	public void ResetCoins()
+	{
+		playerdata.ResetCoins();
 	}
 }

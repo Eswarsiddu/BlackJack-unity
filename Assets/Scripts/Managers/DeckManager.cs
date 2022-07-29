@@ -1,8 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using System;
 using TMPro;
+using UnityEngine;
 
 public abstract class DeckManager : MonoBehaviour
 {
@@ -74,6 +74,8 @@ public abstract class DeckManager : MonoBehaviour
                 cards.Push(finished_card);
 			}
             finished_cards.Clear();
+            SoundManager.PlayShuffleSound();
+            cards.Shuffle();
             // TODO: play animation
 		}
         nextDeal();
@@ -81,12 +83,14 @@ public abstract class DeckManager : MonoBehaviour
 
     private void playerAddCard()
     {
+        SoundManager.PlayCardMovingSound();
         player_deck.addCard(cards.Pop());
         printStack();
     }
 
     private void dealerAddCard()
 	{
+        SoundManager.PlayCardMovingSound();
         dealer_deck.addCard(cards.Pop());
         printStack();
     }
@@ -116,8 +120,6 @@ public abstract class DeckManager : MonoBehaviour
 
     private void dealEnd()
 	{
-        // TODO: dealer_deck.finishedDeal();
-        // TODO: player_deck.finishedDeal();
         dealEnded(); // For disabling Dealing buttons on screen
         playerwintext.text = player_deck.win_status.ToString();
 		switch (player_deck.win_status)
@@ -135,6 +137,7 @@ public abstract class DeckManager : MonoBehaviour
                 removeBetMoney();
                 break;
 		}
+        SoundManager.PlayWinText(player_deck.win_status);
         StartCoroutine(DealEndEnumerator());
 	}
 
@@ -183,14 +186,16 @@ public abstract class DeckManager : MonoBehaviour
         checkInitialWinStatus();
     }
 
-    public void playerHit()
+    public void playerHit() // UI Button
     {
+        SoundManager.PlayUIElementClickSound();
         playerAddCard();
         checkPostWinStatus();
     }
 
-    public void playerStay()
+    public void playerStay() // UI Button
     {
+        SoundManager.PlayUIElementClickSound();
         playDealer();
     }
 
