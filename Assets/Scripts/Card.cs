@@ -5,8 +5,8 @@ public class Card : MonoBehaviour
 {
 	#region Value
 	private int _value;
-    private bool face_down;
-    public int value { get => _value; }
+	private bool face_down;
+	public int value { get => _value; }
 
 	internal bool isFaceDown()
 	{
@@ -14,10 +14,10 @@ public class Card : MonoBehaviour
 	}
 
 	public void faceUp()
-    {
-        face_down = false;
-        updateCardImage();
-    }
+	{
+		face_down = false;
+		updateCardImage();
+	}
 
 	public void faceDown()
 	{
@@ -30,7 +30,7 @@ public class Card : MonoBehaviour
 	#region Graphics
 
 	private SpriteRenderer spriterenderer;
-    private Sprite sprite;
+	private Sprite sprite;
 
 	public void GenerateCard(Sprite sprite, int number)
 	{
@@ -38,13 +38,13 @@ public class Card : MonoBehaviour
 		transform.parent = Constants.offsiteCardsParent;
 		transform.position = Vector3.zero;
 		this.sprite = sprite;
-        if(number >= 10)
+		if (number >= 10)
 		{
-            _value = 10;
+			_value = 10;
 		}
 		else
 		{
-            _value = number;
+			_value = number;
 		}
 		faceDown();
 	}
