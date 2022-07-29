@@ -51,7 +51,7 @@ public class SettingsManager : MonoBehaviour
         SoundManager.PlayUIElementClickSound();
         settings.ToggleHaptic();
         UpdateHapticGraphics();
-        HapticManager.MediumVibration();
+        HapticManager.Vibrate();
     }
 
     public void ToggleSound() // UI Button

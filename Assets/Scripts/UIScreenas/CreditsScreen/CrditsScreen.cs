@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +8,7 @@ public class CrditsScreen : MonoBehaviour
     void Start()
     {
         back.onClick.AddListener(SoundManager.PlayUIElementClickSound);
-        back.onClick.AddListener(HapticManager.ShortVibration);
+        back.onClick.AddListener(HapticManager.Vibrate);
         back.onClick.AddListener(CloseScreen);
     }
 

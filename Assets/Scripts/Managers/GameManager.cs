@@ -18,19 +18,9 @@ public class GameManager : DeckManager
         SoundManager.PlayUIElementClickSound();
 	}
 
-    public void ShortVibration()
-	{
-        HapticManager.ShortVibration();
-	}
-
-    public void MediumVibration()
+    public void Vibrate()
     {
-        HapticManager.MediumVibration();
-    }
-
-    public void LongVibration()
-    {
-        HapticManager.LongVibration();
+        HapticManager.Vibrate();
     }
 
     #region Testing
