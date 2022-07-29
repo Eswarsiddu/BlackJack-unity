@@ -29,7 +29,7 @@ public class PlayerData : ScriptableObject
 
 	public void ResetCoins()
 	{
-		_coins = 500;
+		_coins = Constants.DEFAULT_COINS;
 		RefreshCoinsText();
 	}
 

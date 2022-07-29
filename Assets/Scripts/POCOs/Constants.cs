@@ -9,6 +9,9 @@ public static class TAGS
 public static class Constants
 {
 
+    public const int DEFAULT_COINS = 500;
+    public const float PRECENT = 0.2f;
+
     private static System.Random rng = new System.Random();
 
     public static Sprite CARDBACKSPRITE;

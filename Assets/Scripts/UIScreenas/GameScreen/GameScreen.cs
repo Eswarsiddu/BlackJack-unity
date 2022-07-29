@@ -18,8 +18,6 @@ public class GameScreen : MonoBehaviour
 	// TODO: OR Keep Poker Coins
 	private int betamount;
 
-	private const float PRECENT = 0.2f;
-
 	[SerializeField] private TextMeshProUGUI min_text;
 	[SerializeField] private TextMeshProUGUI max_text;
 	[SerializeField] private TextMeshProUGUI bet_text;
@@ -71,8 +69,8 @@ public class GameScreen : MonoBehaviour
 	{
 		betarea.SetActive(true);
 		dealarea.SetActive(false);
-		minvalue = (int)(playerdata.coins * PRECENT);
-		maxvalue = (int)(playerdata.coins * (1 - PRECENT));
+		minvalue = (int)(playerdata.coins * Constants.PRECENT);
+		maxvalue = (int)(playerdata.coins * (1 - Constants.PRECENT));
 		min_text.text = minvalue.ToString();
 		max_text.text = maxvalue.ToString();
 		CalculateBetAmount();
