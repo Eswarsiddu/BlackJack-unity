@@ -120,8 +120,6 @@ public abstract class DeckManager : MonoBehaviour
 
     private void dealEnd()
 	{
-        // TODO: dealer_deck.finishedDeal();
-        // TODO: player_deck.finishedDeal();
         dealEnded(); // For disabling Dealing buttons on screen
         playerwintext.text = player_deck.win_status.ToString();
 		switch (player_deck.win_status)
@@ -139,6 +137,7 @@ public abstract class DeckManager : MonoBehaviour
                 removeBetMoney();
                 break;
 		}
+        SoundManager.PlayWinText(player_deck.win_status);
         StartCoroutine(DealEndEnumerator());
 	}
 

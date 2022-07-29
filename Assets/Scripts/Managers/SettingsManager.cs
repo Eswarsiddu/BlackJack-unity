@@ -37,12 +37,10 @@ public class SettingsManager : MonoBehaviour
         if (settings.sound)
         {
             sound.GetComponent<Image>().color = defaultcolor;
-            StartSound();
         }
         else
         {
             sound.GetComponent<Image>().color = changed_color;
-            Stopsound();
         }
     }
 
@@ -57,17 +55,7 @@ public class SettingsManager : MonoBehaviour
     public void ToggleSound() // UI Button
     {
         settings.ToggleSound();
+        SoundManager.SoundToggled();
         UpdateSoundGraphics();
     }
-
-    public void StartSound()
-	{
-        SoundManager.PlayBackground();
-	}
-
-    public void Stopsound()
-	{
-        SoundManager.StopBackground();
-	}
-
 }

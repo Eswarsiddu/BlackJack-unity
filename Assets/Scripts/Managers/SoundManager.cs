@@ -1,95 +1,111 @@
 using UnityEngine;
+using System.Collections.Generic;
+using System;
 
-// TODO : Enable commented code after selecting all sounds
 
 public class SoundManager : MonoBehaviour
 {
-    [SerializeField] private AudioSource background_sound;
-    [SerializeField] private AudioSource card_moving_sound;
-    [SerializeField] private AudioSource shuffle_sound;
-    [SerializeField] private AudioSource ui_button_sounds;
-    [SerializeField] private AudioSource win_status_voice;
-    [SerializeField] private AudioClip WIN_VOICE;
-    [SerializeField] private AudioClip BLACKJACK_VOICE;
-    [SerializeField] private AudioClip PUSH_VOICE;
-    [SerializeField] private AudioClip LOSE_VOICE;
-    [SerializeField] private AudioClip BUST_VOICE;
+    private AudioSource background_sound;
+    private AudioSource card_moving_sound;
+    private AudioSource shuffle_sound;
+    private AudioSource ui_button_sounds;
+    private AudioSource win_status_voice;
 
     [SerializeField] private Settings settings;
 
+    private const string VOICESPATH = "Sounds/Voices";
+
+    private Dictionary<WIN_STATUS, AudioClip> audio_clips;
 
     private static SoundManager _this;
 
     void Awake()
     {
         _this = this;
-        //background_sound.loop = true;
-    }
+        
+        foreach(Transform child in transform)
+		{
+			switch (child.name)
+			{
+                case "Background":
+                    background_sound = child.GetComponent<AudioSource>();
+                    break;
+                case "CardMoving":
+                    card_moving_sound = child.GetComponent<AudioSource>();
+                    break;
+                case "shuffling":
+                    shuffle_sound = child.GetComponent<AudioSource>();
+                    break;
+                case "UIClick":
+                    ui_button_sounds = child.GetComponent<AudioSource>();
+                    break;
+                case "WinStatus":
+                    win_status_voice = child.GetComponent<AudioSource>();
+                    break;
+            }
+		}
 
+        audio_clips = new Dictionary<WIN_STATUS, AudioClip>();
+        AudioClip[] clips = Resources.LoadAll<AudioClip>(VOICESPATH);
+        foreach(AudioClip clip in clips)
+		{
+            WIN_STATUS status = (WIN_STATUS)Enum.Parse(typeof(WIN_STATUS), clip.name);
+
+            audio_clips[status] = clip;
+		}
+
+		background_sound.loop = true;
+
+		if (settings.sound)
+			PlayBackground();
+	}
+
+    public static void SoundToggled()
+	{
+        _this.card_moving_sound.mute = !_this.settings.sound;
+        _this.shuffle_sound.mute = !_this.settings.sound;
+        _this.ui_button_sounds.mute = !_this.settings.sound;
+        _this.win_status_voice.mute = !_this.settings.sound;
+
+		if (_this.settings.sound)
+		{
+            PlayBackground();
+		}
+		else
+		{
+            StopBackground();
+		}
+    }
+    
     public static void PlayBackground()
 	{
-        Debug.Log("Play Background");
-        //_this.background_sound.Play();
+        _this.background_sound.Play();
 	}
 
     public static void StopBackground()
 	{
-        Debug.Log("Stop Background");
-        //_this.background_sound.Stop();
+        _this.background_sound.Stop();
     }
 
     public static void PlayCardMovingSound()
 	{
-        if (_this.settings.sound)
-        {
-            Debug.Log("Play Card Moving");
-            //_this.card_moving_sound.Play();
-        }
+            _this.card_moving_sound.Play();
 	}
 
     public static void PlayShuffleSound()
 	{
-        if (_this.settings.sound)
-        {
-            Debug.Log("Play Shuffle");
-            //_this.shuffle_sound.Play();
-        }
+           _this.shuffle_sound.Play();
 	}
 
     public static void PlayUIElementClickSound()
 	{
-        if (_this.settings.sound)
-        {
-            Debug.Log("Play UI Elemnts");
-            //_this.ui_button_sounds.Play();
-        }
+            _this.ui_button_sounds.Play();
     }
 
     public static void PlayWinText(WIN_STATUS winstatus)
 	{
-		/*switch (winstatus)
-		{
-            case WIN_STATUS.WIN:
-                _this.win_status_voice.clip = _this.WIN_VOICE;
-                break;
-            case WIN_STATUS.BLACKJACK:
-                _this.win_status_voice.clip = _this.BLACKJACK_VOICE;
-                break;
-            case WIN_STATUS.LOSE:
-                _this.win_status_voice.clip = _this.LOSE_VOICE;
-                break;
-            case WIN_STATUS.BUST:
-                _this.win_status_voice.clip = _this.BUST_VOICE;
-                break;
-            case WIN_STATUS.PUSH:
-                _this.win_status_voice.clip = _this.PUSH_VOICE;
-                break;
-        }*/
-        if (_this.settings.sound)
-        {
-            Debug.Log("Play winnig status");
-            //_this.win_status_voice.Play();
-        }
+            _this.win_status_voice.clip = _this.audio_clips[winstatus];
+            _this.win_status_voice.Play();
 	}
 
 }
