@@ -31,7 +31,7 @@ public class GameScreen : MonoBehaviour
 	{
 		playerdata.increaseCoins(0);
 		deckmanager.nextDeal = nextDeal;
-		deckmanager.dealEnded = dealEnd;
+		deckmanager.DisableDealOptions = dealEnd;
 		backbutton.onClick.AddListener(SoundManager.PlayUIElementClickSound);
 	}
 

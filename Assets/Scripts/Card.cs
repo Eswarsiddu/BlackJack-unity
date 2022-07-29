@@ -3,41 +3,37 @@ using UnityEngine;
 
 public class Card : MonoBehaviour
 {
-	#region Value
 	private int _value;
 	private bool face_down;
+
+	private SpriteRenderer sprite_renderer;
+	private Sprite card_sprite;
+
 	public int value { get => _value; }
+	public bool isFaceUp { get => !face_down; }
 
-	internal bool isFaceDown()
-	{
-		return face_down;
-	}
+	public int orderinlayer { set { sprite_renderer.sortingOrder = value; } }
+	public Transform parent { set { transform.parent = value; } }
 
-	public void faceUp()
+
+	public void TurnFaceUp()
 	{
 		face_down = false;
 		updateCardImage();
 	}
 
-	public void faceDown()
+	public void TurnFaceDown()
 	{
 		face_down = true;
 		updateCardImage();
 	}
 
-	#endregion
-
-	#region Graphics
-
-	private SpriteRenderer spriterenderer;
-	private Sprite sprite;
-
 	public void GenerateCard(Sprite sprite, int number)
 	{
-		spriterenderer = GetComponent<SpriteRenderer>();
+		sprite_renderer = GetComponent<SpriteRenderer>();
 		transform.parent = Constants.offsiteCardsParent;
 		transform.position = Vector3.zero;
-		this.sprite = sprite;
+		this.card_sprite = sprite;
 		if (number >= 10)
 		{
 			_value = 10;
@@ -46,17 +42,13 @@ public class Card : MonoBehaviour
 		{
 			_value = number;
 		}
-		faceDown();
+		TurnFaceDown();
 	}
-
-	public int orderinlayer { set { spriterenderer.sortingOrder = value; } }
 
 	private void updateCardImage()
 	{
-		spriterenderer.sprite = face_down ? Constants.CARDBACKSPRITE : sprite;
+		sprite_renderer.sprite = face_down ? Constants.CARDBACKSPRITE : card_sprite;
 	}
-
-	public Transform parent { set { transform.parent = value; } }
 
 	private IEnumerator MoveCardOffScreen()
 	{
@@ -65,14 +57,12 @@ public class Card : MonoBehaviour
 
 	public void ResetCard()
 	{
-		faceDown();
+		TurnFaceDown();
 		parent = Constants.offsiteCardsParent;
 		transform.position = Vector3.zero;
-		gameObject.SetActive(false);
 		orderinlayer = 0;
+		gameObject.SetActive(false);
 	}
-
-	#endregion
 
 	#region Test
 

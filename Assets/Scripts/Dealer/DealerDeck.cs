@@ -21,18 +21,18 @@ public class DealerDeck : PlayerDeck
 	{
 		if (first_card)
 		{
-			card.faceDown();
+			card.TurnFaceDown();
 			first_card = false;
 		}
 		else
 		{
-			card.faceUp();
+			card.TurnFaceUp();
 		}
 	}
 
 	public override void playerStayed()
 	{
 		base.playerStayed();
-		cards[0].faceUp();
+		cards[0].TurnFaceUp();
 	}
 }

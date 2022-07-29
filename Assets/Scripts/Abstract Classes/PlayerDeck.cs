@@ -25,15 +25,12 @@ public class PlayerDeck : MonoBehaviour
         }
     }
 
-    #region Value
-
     public virtual void playerStayed() {
         state = STATE.STAYED;
     }
 
     public virtual void initializePack()
 	{
-		#region value
 
 		total1 = 0;
         total2 = 0;
@@ -41,16 +38,13 @@ public class PlayerDeck : MonoBehaviour
         cards = new List<Card>();
 
         _win_status = WIN_STATUS.NONE;
-        #endregion
 
 
-        #region graphics
 
         prev_order_layer = 0;
         prev_pos.x = -0.2f;
         scoreobject.SetActive(false);
 
-        #endregion
 
         RemoveTestCard();
     }
@@ -64,7 +58,7 @@ public class PlayerDeck : MonoBehaviour
 
     protected virtual void ChangeCardState(Card card)
 	{
-        card.faceUp();
+        card.TurnFaceUp();
 	}
 
 
@@ -84,7 +78,7 @@ public class PlayerDeck : MonoBehaviour
         int total = 0;
         foreach (Card card in cards)
         {
-            if (!card.isFaceDown())
+            if (card.isFaceUp)
             {
                 total += card.value;
                 if (card.value == 1) no_of_A += 1;
@@ -127,23 +121,16 @@ public class PlayerDeck : MonoBehaviour
 
     public virtual void resetDeck(List<Card> finished_deck)
     {
-		#region value
 
 		total1 = 0;
         total2 = 0;
         state = STATE.PLAYING;
         _win_status = WIN_STATUS.NONE;
 
-        #endregion
-
-
-        #region graphics
 
         prev_order_layer = 0;
         prev_pos.x = -0.2f;
         scoreobject.SetActive(false);
-
-        #endregion
 
         foreach (Card card in cards)
 		{
@@ -153,10 +140,6 @@ public class PlayerDeck : MonoBehaviour
 
         cards.Clear();
     }
-
-    #endregion
-
-    #region Graphics
 
     [SerializeField] private GameObject twotoals;
 	[SerializeField] private TextMeshPro total1_text;
@@ -238,8 +221,6 @@ public class PlayerDeck : MonoBehaviour
         virtualupdateGraphics();
 	}
     protected virtual void virtualupdateGraphics(){}
-
-    #endregion
 
 
 

@@ -12,7 +12,7 @@ public abstract class DeckManager : MonoBehaviour
     private Stack<Card> cards;
     private List<Card> finished_cards;
     public Action nextDeal;
-    public Action dealEnded;
+    public Action DisableDealOptions;
     [SerializeField] private PlayerData playerdata;
 
     public int betamount { 
@@ -120,7 +120,7 @@ public abstract class DeckManager : MonoBehaviour
 
     private void dealEnd()
 	{
-        dealEnded(); // For disabling Dealing buttons on screen
+        DisableDealOptions(); 
         playerwintext.text = player_deck.win_status.ToString();
 		switch (player_deck.win_status)
 		{
@@ -200,8 +200,6 @@ public abstract class DeckManager : MonoBehaviour
     }
 
 
-	#region Bet Amount
-
 	private void removeBetMoney()
     {
         _betamount = 0;
@@ -217,7 +215,6 @@ public abstract class DeckManager : MonoBehaviour
         _betamount = _betamount * 2;
     }
 
-	#endregion
 
 	#region Test
 
