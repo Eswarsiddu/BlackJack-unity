@@ -1,6 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public static class TAGS
+{
+    public const string BACK = "Back";
+}
 
 public static class Constants
 {
