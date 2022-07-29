@@ -7,15 +7,10 @@ public class HomeScreen : MonoBehaviour
     [SerializeField] private TextMeshProUGUI coins_text;
 	[SerializeField] private PlayerData playerdata;
 
-	void Start()
-	{
-		playerdata.increaseCoins(0);
-	}
-
 	private void OnEnable()
 	{
 		playerdata.UpdateCoins += UpdateCoinsText;
-		playerdata.increaseCoins(0);
+		playerdata.RefreshCoinsText();
 	}
 
 	private void OnDisable()
