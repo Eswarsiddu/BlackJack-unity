@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class SettingsManager : MonoBehaviour
 {
-    [SerializeField] private Settings settings;
+    private Settings settings;
 
     private Button haptic;
     private Button sound;
@@ -14,21 +14,22 @@ public class SettingsManager : MonoBehaviour
 
 	private void Awake()
 	{
-		foreach(Transform child in transform)
-		{
-			switch (child.tag)
-			{
-				case TAGS.HAPTIC:
-					haptic = child.GetComponent<Button>();
-					break;
-				case TAGS.SOUND:
-					sound = child.GetComponent<Button>();
-					break;
-				default:
-					break;
-			}
-		}
-	}
+        settings= Resources.Load<Settings>(Constants.SETTINGS_PATH);
+        foreach (Transform child in transform)
+        {
+            switch (child.tag)
+            {
+                case TAGS.HAPTIC:
+                    haptic = child.GetComponent<Button>();
+                    break;
+                case TAGS.SOUND:
+                    sound = child.GetComponent<Button>();
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 
 	void Start()
     {

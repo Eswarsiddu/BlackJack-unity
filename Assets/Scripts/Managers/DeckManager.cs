@@ -13,9 +13,9 @@ public abstract class DeckManager : MonoBehaviour
     private List<Card> finished_cards;
     public Action nextDeal;
     public Action DisableDealOptions;
-    [SerializeField] private PlayerData playerdata;
+    private PlayerData playerdata;
 
-    public int betamount { 
+	public int betamount { 
         set 
         { 
             _betamount = value;
@@ -29,12 +29,11 @@ public abstract class DeckManager : MonoBehaviour
     [SerializeField] private GameObject hit_button;
     [SerializeField] private GameObject stay_button;
 
-    const string IMAGESPATH = "PlayingCards";
-    [SerializeField] private GameObject card_prefab;
     [SerializeField] private TextMeshProUGUI playerwintext;
 
     protected void initializeDeck()
 	{
+        playerdata = Resources.Load<PlayerData>(Constants.PLAYER_DATA_PATH);
         cards = new Stack<Card>();
         finished_cards = new List<Card>();
         player_deck.initializePack();
@@ -45,7 +44,8 @@ public abstract class DeckManager : MonoBehaviour
     
     private void generateDeck()
     {
-        Sprite[] cardsprites = Resources.LoadAll<Sprite>(IMAGESPATH);
+        GameObject card_prefab = Resources.Load<GameObject>(Constants.CARD_PREFAB_PATH);
+        Sprite[] cardsprites = Resources.LoadAll<Sprite>(Constants.CARD_FRONT_IMAGE_PATH);
         foreach(Sprite sprite in cardsprites)
 		{
             string name = sprite.name;

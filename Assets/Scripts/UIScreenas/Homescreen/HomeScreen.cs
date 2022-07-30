@@ -5,7 +5,12 @@ using UnityEngine;
 public class HomeScreen : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI coins_text;
-	[SerializeField] private PlayerData playerdata;
+	private PlayerData playerdata;
+
+	private void Awake()
+	{
+		playerdata = Resources.Load<PlayerData>(Constants.PLAYER_DATA_PATH);
+	}
 
 	private void OnEnable()
 	{

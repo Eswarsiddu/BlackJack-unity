@@ -1,28 +1,19 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using System.Linq;
 
 public class PlayerDeck : MonoBehaviour
 {
-    protected int total1;
-	protected int total2;
-	protected int _final_value;
+    private int total1;
+	private int total2;
+	private int _final_value;
 	protected List<Card> cards;
-    protected STATE state;
+    private STATE state;
 
     [SerializeField] private GameObject scoreobject;
 
-    private WIN_STATUS _win_status;
-
-    public WIN_STATUS win_status
-    {
-        get => _win_status;
-
-        set
-        {
-            _win_status = value;
-        }
-    }
+    public WIN_STATUS win_status { get; set; }
 
     public virtual void playerStayed() {
         state = STATE.STAYED;
@@ -30,13 +21,12 @@ public class PlayerDeck : MonoBehaviour
 
     public virtual void initializePack()
 	{
-
 		total1 = 0;
         total2 = 0;
         _final_value = 0;
         cards = new List<Card>();
 
-        _win_status = WIN_STATUS.NONE;
+        win_status = WIN_STATUS.NONE;
 
 
 
@@ -46,11 +36,6 @@ public class PlayerDeck : MonoBehaviour
 
 
         RemoveTestCard();
-    }
-
-    public void Stayed()
-    {
-        state = STATE.STAYED;
     }
 
     public int final_value { get => _final_value; }
@@ -74,26 +59,22 @@ public class PlayerDeck : MonoBehaviour
     protected void calculateTotal()
     {
         int no_of_A = 0;
-        int total = 0;
-        foreach (Card card in cards)
-        {
-            if (card.isFaceUp)
-            {
-                total += card.value;
-                if (card.value == 1) no_of_A += 1;
-            }
-        }
-        total1 = total;
-        total2 = total + ((no_of_A > 0) ? 10 : 0);
+        total1 = cards.Sum(card => { 
+            no_of_A += card.value == 1 ? 1 : 0; 
+            return card.value; 
+        });
+      
+        total2 = total1 + ((no_of_A > 0) ? 10 : 0);
         checkWinStatus();
     }
 
     protected virtual void checkWinStatus()
     {
+        state = STATE.STAYED;
+
         if (total1 > 21)
         {
             win_status = WIN_STATUS.BUST;
-            state = STATE.STAYED;
             _final_value = total1;
             return;
         }
@@ -101,30 +82,28 @@ public class PlayerDeck : MonoBehaviour
         if (total1 == 21 || total2 == 21)
         {
             win_status = WIN_STATUS.BLACKJACK;
-            state = STATE.STAYED;
             _final_value = 21;
             return;
         }
 
+        state = STATE.PLAYING;
+        win_status = WIN_STATUS.NONE;
+
         if (total2 > 21)
         {
             _final_value = total1;
+            return;
         }
-        else
-        {
-            _final_value = total2;
-        }
-
-        win_status = WIN_STATUS.NONE;
+        
+        _final_value = total2;
     }
 
     public virtual void resetDeck(List<Card> finished_deck)
     {
-
 		total1 = 0;
         total2 = 0;
         state = STATE.PLAYING;
-        _win_status = WIN_STATUS.NONE;
+        win_status = WIN_STATUS.NONE;
 
 
         prev_order_layer = 0;
@@ -219,9 +198,8 @@ public class PlayerDeck : MonoBehaviour
         updateScore();
         virtualupdateGraphics();
 	}
+
     protected virtual void virtualupdateGraphics(){}
-
-
 
     #region Testing
 

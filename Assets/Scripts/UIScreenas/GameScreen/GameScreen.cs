@@ -11,7 +11,7 @@ public class GameScreen : MonoBehaviour
 	[SerializeField] private Scrollbar scrollbar;
 	[SerializeField] private Button backbutton;
 
-	[SerializeField] private PlayerData playerdata;
+	private PlayerData playerdata;
 
 	private int minvalue;
 	private int maxvalue; // TODO: Set min and values of table based on coins
@@ -24,6 +24,12 @@ public class GameScreen : MonoBehaviour
 
 	[SerializeField] private GameObject betarea;
 	[SerializeField] private GameObject dealarea;
+
+
+	private void Awake()
+	{
+		playerdata = Resources.Load<PlayerData>(Constants.PLAYER_DATA_PATH);
+	}
 
 	void Start()
 	{

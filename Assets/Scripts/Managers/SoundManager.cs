@@ -11,9 +11,7 @@ public class SoundManager : MonoBehaviour
     private AudioSource ui_button_sounds;
     private AudioSource win_status_voice;
 
-    [SerializeField] private Settings settings;
-
-    private const string VOICESPATH = "Sounds/Voices";
+    private Settings settings;
 
     private Dictionary<WIN_STATUS, AudioClip> audio_clips;
 
@@ -22,7 +20,7 @@ public class SoundManager : MonoBehaviour
     void Awake()
     {
         _this = this;
-        
+        settings = Resources.Load<Settings>(Constants.SETTINGS_PATH);
         foreach(Transform child in transform)
 		{
 			switch (child.name)
@@ -46,7 +44,7 @@ public class SoundManager : MonoBehaviour
 		}
 
         audio_clips = new Dictionary<WIN_STATUS, AudioClip>();
-        AudioClip[] clips = Resources.LoadAll<AudioClip>(VOICESPATH);
+        AudioClip[] clips = Resources.LoadAll<AudioClip>(Constants.VOICES_AUDIO_PATH);
         foreach(AudioClip clip in clips)
 		{
             WIN_STATUS status = (WIN_STATUS)Enum.Parse(typeof(WIN_STATUS), clip.name);

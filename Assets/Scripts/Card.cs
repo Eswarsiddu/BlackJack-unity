@@ -9,12 +9,10 @@ public class Card : MonoBehaviour
 	private SpriteRenderer sprite_renderer;
 	private Sprite card_sprite;
 
-	public int value { get => _value; }
-	public bool isFaceUp { get => !face_down; }
+	public int value { get => face_down ? 0 : _value; }
 
 	public int orderinlayer { set { sprite_renderer.sortingOrder = value; } }
 	public Transform parent { set { transform.parent = value; } }
-
 
 	public void TurnFaceUp()
 	{
