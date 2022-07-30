@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 public class DealerDeck : PlayerDeck
 {
 	protected override void ChangeCardState(Card card)

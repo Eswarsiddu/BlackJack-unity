@@ -15,6 +15,8 @@ public static class Constants
     public const int DEFAULT_COINS = 500;
     public const float PRECENT = 0.2f;
 
+    public const float WAITING_TIME = 3f;
+
     public const string SETTINGS_PATH = "Scriptables/Settings";
     public const string PLAYER_DATA_PATH = "Scriptables/PlayerData";
     public const string VOICES_AUDIO_PATH = "Sounds/Voices";

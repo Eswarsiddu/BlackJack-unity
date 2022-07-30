@@ -6,8 +6,6 @@ using UnityEngine;
 
 public abstract class DeckManager : MonoBehaviour
 {
-    private const float WAITING_TIME = 3f;
-
     private int _betamount;
     private Stack<Card> cards;
     private List<Card> finished_cards;
@@ -120,30 +118,26 @@ public abstract class DeckManager : MonoBehaviour
 
     private void dealEnd()
 	{
-        DisableDealOptions(); 
-        playerwintext.text = player_deck.win_status.ToString();
-		switch (player_deck.win_status)
+        DisableDealOptions();
+        WIN_STATUS win_status = player_deck.win_status;
+        playerwintext.text = Enum.GetName(typeof(WIN_STATUS),player_deck.win_status);
+        if(win_status == WIN_STATUS.WIN || win_status == WIN_STATUS.BLACKJACK)
 		{
-			case WIN_STATUS.WIN:
-            case WIN_STATUS.BLACKJACK:
-                doublebetMoney();
-                takeBetMoney();
-                break;
-            case WIN_STATUS.PUSH:
-                takeBetMoney();
-                break;
-            case WIN_STATUS.BUST:
-            case WIN_STATUS.LOSE:
-                removeBetMoney();
-                break;
+            doublebetMoney();
+        }
+        else if (win_status == WIN_STATUS.BUST || win_status == WIN_STATUS.LOSE)
+		{
+            removeBetMoney();
 		}
-        SoundManager.PlayWinText(player_deck.win_status);
+		
+        takeBetMoney();
+        SoundManager.PlayWinText(win_status);
         StartCoroutine(DealEndEnumerator());
 	}
 
     private IEnumerator DealEndEnumerator()
 	{
-        yield return new WaitForSeconds(WAITING_TIME);
+        yield return new WaitForSeconds(Constants.WAITING_TIME);
         resetDeck();
 	}
 
