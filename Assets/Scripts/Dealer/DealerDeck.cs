@@ -11,9 +11,13 @@ public class DealerDeck : PlayerDeck
 		card.TurnFaceUp();
 	}
 
-	public override void playerStayed()
+	public void PlayerStayed()
 	{
-		base.playerStayed();
 		cards[0].TurnFaceUp();
+	}
+
+	protected override void UpdateScore()
+	{
+		SetFinalScore();
 	}
 }

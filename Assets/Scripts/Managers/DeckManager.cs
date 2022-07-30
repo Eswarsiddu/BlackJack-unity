@@ -34,8 +34,8 @@ public abstract class DeckManager : MonoBehaviour
         playerdata = Resources.Load<PlayerData>(Constants.PLAYER_DATA_PATH);
         cards = new Stack<Card>();
         finished_cards = new List<Card>();
-        player_deck.initializePack();
-        dealer_deck.initializePack();
+        player_deck.InitializeDeckk();
+        dealer_deck.InitializeDeckk();
         playerwintext.text = "";
         generateDeck();
 	}
@@ -63,8 +63,8 @@ public abstract class DeckManager : MonoBehaviour
     protected void resetDeck()
 	{
         playerwintext.text = "";
-        player_deck.resetDeck(finished_cards);
-        dealer_deck.resetDeck(finished_cards);
+        player_deck.ResetDeck(finished_cards);
+        dealer_deck.ResetDeck(finished_cards);
         betamount = 0;
         if (cards.Count <= 15)
 		{
@@ -82,21 +82,21 @@ public abstract class DeckManager : MonoBehaviour
     private void playerAddCard()
     {
         SoundManager.PlayCardMovingSound();
-        player_deck.addCard(cards.Pop());
+        player_deck.AddCard(cards.Pop());
         printStack();
     }
 
     private void dealerAddCard()
 	{
         SoundManager.PlayCardMovingSound();
-        dealer_deck.addCard(cards.Pop());
+        dealer_deck.AddCard(cards.Pop());
         printStack();
     }
 
     private void playDealer()
 	{
-        dealer_deck.playerStayed();
-        player_deck.playerStayed();
+        player_deck.Stayed();
+        dealer_deck.PlayerStayed();
         while(dealer_deck.final_value < 17)
 		{
             dealerAddCard();

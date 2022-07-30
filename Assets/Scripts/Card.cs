@@ -11,8 +11,13 @@ public class Card : MonoBehaviour
 
 	public int value { get => face_down ? 0 : _value; }
 
-	public int orderinlayer { set { sprite_renderer.sortingOrder = value; } }
-	public Transform parent { set { transform.parent = value; } }
+
+	public void UpdateDetails(Transform parent, Vector3 position, int orderinlayer)
+	{
+		transform.parent = parent;
+		transform.localPosition = position;
+		sprite_renderer.sortingOrder = orderinlayer;
+	}
 
 	public void TurnFaceUp()
 	{
@@ -26,12 +31,15 @@ public class Card : MonoBehaviour
 		updateCardImage();
 	}
 
+	private void updateCardImage()
+	{
+		sprite_renderer.sprite = face_down ? Constants.CARDBACKSPRITE : card_sprite;
+	}
+
 	public void GenerateCard(Sprite sprite, int number)
 	{
 		sprite_renderer = GetComponent<SpriteRenderer>();
-		transform.parent = Constants.offsiteCardsParent;
-		transform.position = Vector3.zero;
-		this.card_sprite = sprite;
+		card_sprite = sprite;
 		if (number >= 10)
 		{
 			_value = 10;
@@ -40,25 +48,13 @@ public class Card : MonoBehaviour
 		{
 			_value = number;
 		}
-		TurnFaceDown();
-	}
-
-	private void updateCardImage()
-	{
-		sprite_renderer.sprite = face_down ? Constants.CARDBACKSPRITE : card_sprite;
-	}
-
-	private IEnumerator MoveCardOffScreen()
-	{
-		yield return null;
+		ResetCard();
 	}
 
 	public void ResetCard()
 	{
 		TurnFaceDown();
-		parent = Constants.offsiteCardsParent;
-		transform.position = Vector3.zero;
-		orderinlayer = 0;
+		UpdateDetails(Constants.offsiteCardsParent, Vector3.zero, 0);
 		gameObject.SetActive(false);
 	}
 
@@ -70,4 +66,5 @@ public class Card : MonoBehaviour
 	}
 
 	#endregion
+
 }
