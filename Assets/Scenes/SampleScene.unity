@@ -297,7 +297,7 @@ GameObject:
   - component: {fileID: 159096743}
   m_Layer: 0
   m_Name: Total1
-  m_TagString: Untagged
+  m_TagString: Total1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -722,7 +722,7 @@ GameObject:
   - component: {fileID: 290086471}
   m_Layer: 0
   m_Name: total2
-  m_TagString: Untagged
+  m_TagString: Total2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1863,13 +1863,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04b4f07bd606aa1489cab12039e36306, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreobject: {fileID: 743959518}
   twotoals: {fileID: 1540089344}
-  total1_text: {fileID: 159096743}
-  total2_text: {fileID: 1271638467}
-  finalscore: {fileID: 2027514550}
-  final_value_text: {fileID: 2027514551}
-  parent_deck: {fileID: 299124723}
   testingcard: {fileID: 94688241}
 --- !u!1 &519420028
 GameObject:
@@ -3517,7 +3511,7 @@ GameObject:
   - component: {fileID: 1026200254}
   m_Layer: 0
   m_Name: Total1
-  m_TagString: Untagged
+  m_TagString: Total1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4743,7 +4737,7 @@ GameObject:
   - component: {fileID: 1271638467}
   m_Layer: 0
   m_Name: total2
-  m_TagString: Untagged
+  m_TagString: Total2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5244,13 +5238,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68aeb671ba75ecc42b070df6dc5f9d75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreobject: {fileID: 286242137}
   twotoals: {fileID: 2081027345}
-  total1_text: {fileID: 1026200254}
-  total2_text: {fileID: 290086471}
-  finalscore: {fileID: 2004275850}
-  final_value_text: {fileID: 2004275852}
-  parent_deck: {fileID: 1514652540}
   testingcard: {fileID: 438722307}
 --- !u!1 &1467539751
 GameObject:
@@ -5698,7 +5686,7 @@ GameObject:
   - component: {fileID: 1540089345}
   m_Layer: 0
   m_Name: two scores
-  m_TagString: Untagged
+  m_TagString: Total
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7189,7 +7177,7 @@ GameObject:
   - component: {fileID: 2004275852}
   m_Layer: 0
   m_Name: finalscore
-  m_TagString: Untagged
+  m_TagString: FinalScore
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7437,7 +7425,7 @@ GameObject:
   - component: {fileID: 2027514551}
   m_Layer: 0
   m_Name: finalscore
-  m_TagString: Untagged
+  m_TagString: FinalScore
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7683,7 +7671,7 @@ GameObject:
   - component: {fileID: 2081027346}
   m_Layer: 0
   m_Name: two scores
-  m_TagString: Untagged
+  m_TagString: Total
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

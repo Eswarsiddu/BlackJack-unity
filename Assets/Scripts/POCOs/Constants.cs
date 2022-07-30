@@ -7,6 +7,10 @@ public static class TAGS
     public const string HAPTIC = "Haptic";
     public const string SOUND = "Sound";
     public const string HOME_SCREEN = "HomeScreen";
+    public const string TOTAL1 = "Total1";
+    public const string TOTAL2 = "Total2";
+    public const string TOTAL = "Total";
+    public const string FINAL_SCORE = "FinalScore";
 }
 
 public static class Constants

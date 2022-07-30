@@ -5,17 +5,66 @@ using System.Linq;
 
 public class PlayerDeck : MonoBehaviour
 {
+    private const int DECK_PARENT_POSITION = 0;
+    private const int UIELEMENTS_POSITION = 2;
     private int total1;
 	private int total2;
 	private int _final_value;
 	protected List<Card> cards;
     private STATE state;
 
-    [SerializeField] private GameObject scoreobject;
+    private GameObject scoreobject;
+
+    [SerializeField] private GameObject twotoals;
+    private TextMeshPro total1_text;
+    private TextMeshPro total2_text;
+
+    private GameObject finalscore;
+    private TextMeshPro final_value_text;
+
+    private Transform deck_parent;
+
+    private Vector3 prev_pos;
+    private int prev_order_layer;
 
     public WIN_STATUS win_status { get; set; }
 
-    public virtual void playerStayed() {
+
+	private void Awake()
+	{
+        deck_parent = transform.GetChild(DECK_PARENT_POSITION);
+        scoreobject = transform.GetChild(UIELEMENTS_POSITION).gameObject;
+        foreach (Transform uichild in scoreobject.transform)
+		{
+			switch (uichild.tag)
+			{
+                case TAGS.TOTAL:
+                    twotoals = uichild.gameObject; break;
+                case TAGS.FINAL_SCORE:
+                    finalscore = uichild.gameObject; break;
+			}
+		}
+
+        final_value_text = finalscore.GetComponent<TextMeshPro>();
+
+        foreach(Transform totalchild in twotoals.transform)
+		{
+			switch (totalchild.tag)
+			{
+                case TAGS.TOTAL1:
+                    total1_text = totalchild.GetComponent<TextMeshPro>(); break;
+                case TAGS.TOTAL2:
+                    total2_text = totalchild.GetComponent<TextMeshPro>();break;
+            }
+            if(total1_text != null && total2_text != null)
+			{
+                break;
+			}
+        }
+	}
+
+
+	public virtual void playerStayed() {
         state = STATE.STAYED;
     }
 
@@ -119,17 +168,6 @@ public class PlayerDeck : MonoBehaviour
         cards.Clear();
     }
 
-    [SerializeField] private GameObject twotoals;
-	[SerializeField] private TextMeshPro total1_text;
-    [SerializeField] private TextMeshPro total2_text;
-
-    [SerializeField] private GameObject finalscore;
-    [SerializeField] private TextMeshPro final_value_text;
-
-    [SerializeField] private Transform parent_deck;
-    private Vector3 prev_pos;
-    private int prev_order_layer;
-
     private void EnableScore()
 	{
         scoreobject.SetActive(true);
@@ -138,7 +176,7 @@ public class PlayerDeck : MonoBehaviour
     private void addcardgui(Card card)
 	{
         EnableScore();
-        card.parent = parent_deck;
+        card.parent = deck_parent;
         prev_pos.x += 0.2f;
         card.transform.localPosition = prev_pos;
         card.orderinlayer = prev_order_layer++;
@@ -146,9 +184,9 @@ public class PlayerDeck : MonoBehaviour
 
     private void updateDeck()
 	{
-        Vector3  pos = parent_deck.position;
+        Vector3  pos = deck_parent.position;
         pos.x = -prev_pos.x / 4;
-        parent_deck.position = pos;
+        deck_parent.position = pos;
 	}
 
     private void setfinalscore()

@@ -8,6 +8,10 @@ TagManager:
   - Haptic
   - Sound
   - HomeScreen
+  - Total1
+  - Total2
+  - Total
+  - FinalScore
   layers:
   - Default
   - TransparentFX
