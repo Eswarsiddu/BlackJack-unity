@@ -4,23 +4,14 @@ using UnityEngine.UI;
 public class GameManager : DeckManager
 {
     [SerializeField]private Transform cardparent;
-    [SerializeField] private Sprite card_back_sprite;
     void Awake()
     {
         Constants.offsiteCardsParent = cardparent;
-        Constants.CARDBACKSPRITE = card_back_sprite;
-        initializeDeck();
     }
 
-
-    public void PlayUIClickSound()
+	private void Start()
 	{
-        SoundManager.PlayUIElementClickSound();
-	}
-
-    public void Vibrate()
-    {
-        HapticManager.Vibrate();
+        initializeDeck();
     }
 
     #region Testing

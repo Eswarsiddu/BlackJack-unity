@@ -1,43 +1,44 @@
-using System.Collections;
 using UnityEngine;
 
 public class Card : MonoBehaviour
 {
-	#region Value
 	private int _value;
 	private bool face_down;
-	public int value { get => _value; }
 
-	internal bool isFaceDown()
+	private SpriteRenderer sprite_renderer;
+	private Sprite card_sprite;
+
+	public int value { get => face_down ? 0 : _value; }
+
+
+	public void UpdateDetails(Transform parent, Vector3 position, int orderinlayer)
 	{
-		return face_down;
+		transform.parent = parent;
+		transform.localPosition = position;
+		sprite_renderer.sortingOrder = orderinlayer;
 	}
 
-	public void faceUp()
+	public void TurnFaceUp()
 	{
 		face_down = false;
 		updateCardImage();
 	}
 
-	public void faceDown()
+	public void TurnFaceDown()
 	{
 		face_down = true;
 		updateCardImage();
 	}
 
-	#endregion
-
-	#region Graphics
-
-	private SpriteRenderer spriterenderer;
-	private Sprite sprite;
+	private void updateCardImage()
+	{
+		sprite_renderer.sprite = face_down ? Constants.CARDBACKSPRITE : card_sprite;
+	}
 
 	public void GenerateCard(Sprite sprite, int number)
 	{
-		spriterenderer = GetComponent<SpriteRenderer>();
-		transform.parent = Constants.offsiteCardsParent;
-		transform.position = Vector3.zero;
-		this.sprite = sprite;
+		sprite_renderer = GetComponent<SpriteRenderer>();
+		card_sprite = sprite;
 		if (number >= 10)
 		{
 			_value = 10;
@@ -46,40 +47,23 @@ public class Card : MonoBehaviour
 		{
 			_value = number;
 		}
-		faceDown();
-	}
-
-	public int orderinlayer { set { spriterenderer.sortingOrder = value; } }
-
-	private void updateCardImage()
-	{
-		spriterenderer.sprite = face_down ? Constants.CARDBACKSPRITE : sprite;
-	}
-
-	public Transform parent { set { transform.parent = value; } }
-
-	private IEnumerator MoveCardOffScreen()
-	{
-		yield return null;
+		ResetCard();
 	}
 
 	public void ResetCard()
 	{
-		faceDown();
-		parent = Constants.offsiteCardsParent;
-		transform.position = Vector3.zero;
+		TurnFaceDown();
+		UpdateDetails(Constants.offsiteCardsParent, Vector3.zero, 0);
 		gameObject.SetActive(false);
-		orderinlayer = 0;
 	}
-
-	#endregion
 
 	#region Test
 
 	public override string ToString()
 	{
-		return value.ToString();
+		return _value.ToString();
 	}
 
 	#endregion
+
 }

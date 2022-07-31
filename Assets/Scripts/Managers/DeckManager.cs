@@ -6,177 +6,27 @@ using UnityEngine;
 
 public abstract class DeckManager : MonoBehaviour
 {
-    private const float WAITING_TIME = 3f;
-
-    private int _betamount;
+    private int bet_amount;
     private Stack<Card> cards;
     private List<Card> finished_cards;
     public Action nextDeal;
-    public Action dealEnded;
-    [SerializeField] private PlayerData playerdata;
-
-    public int betamount { 
-        set 
-        { 
-            _betamount = value;
-            playerdata.decreaseCoins(value);
-        } 
-    }
+    public Action DisableDealOptions;
+    private PlayerData playerdata;
 
     [SerializeField] private PlayerDeck player_deck;
     [SerializeField] private DealerDeck dealer_deck;
 
-    [SerializeField] private GameObject hit_button;
-    [SerializeField] private GameObject stay_button;
-
-    const string IMAGESPATH = "PlayingCards";
-    [SerializeField] private GameObject card_prefab;
     [SerializeField] private TextMeshProUGUI playerwintext;
 
-    protected void initializeDeck()
+
+    public void SetBetAmount(int bet_amount)
 	{
-        cards = new Stack<Card>();
-        finished_cards = new List<Card>();
-        player_deck.initializePack();
-        dealer_deck.initializePack();
-        playerwintext.text = "";
-        generateDeck();
-	}
-    
-    private void generateDeck()
+        this.bet_amount = bet_amount;
+        playerdata.decreaseCoins(bet_amount);
+    }
+
+    public void startDeal()
     {
-        Sprite[] cardsprites = Resources.LoadAll<Sprite>(IMAGESPATH);
-        foreach(Sprite sprite in cardsprites)
-		{
-            string name = sprite.name;
-
-            if(name == "Joker_Color" || name == "Joker_Monochrome") continue;
-
-            int number = int.Parse(name.Substring(name.Length - 2));
-            GameObject temp = Instantiate(card_prefab);
-            temp.TryGetComponent<Card>(out Card card);
-            card.GenerateCard(sprite,number);       
-            cards.Push(card);
-		}
-        cards.Shuffle();
-        printStack();
-    }
-
-    protected void resetDeck()
-	{
-        playerwintext.text = "";
-        player_deck.resetDeck(finished_cards);
-        dealer_deck.resetDeck(finished_cards);
-        betamount = 0;
-        if (cards.Count <= 15)
-		{
-            foreach(Card finished_card in finished_cards){
-                cards.Push(finished_card);
-			}
-            finished_cards.Clear();
-            SoundManager.PlayShuffleSound();
-            cards.Shuffle();
-            // TODO: play animation
-		}
-        nextDeal();
-    }
-
-    private void playerAddCard()
-    {
-        SoundManager.PlayCardMovingSound();
-        player_deck.addCard(cards.Pop());
-        printStack();
-    }
-
-    private void dealerAddCard()
-	{
-        SoundManager.PlayCardMovingSound();
-        dealer_deck.addCard(cards.Pop());
-        printStack();
-    }
-
-    private void playDealer()
-	{
-        dealer_deck.playerStayed();
-        player_deck.playerStayed();
-        while(dealer_deck.final_value < 17)
-		{
-            dealerAddCard();
-		}
-        if(dealer_deck.final_value > 21 || player_deck.final_value > dealer_deck.final_value)
-		{
-            player_deck.win_status = WIN_STATUS.WIN;
-		}
-        else if(player_deck.final_value == dealer_deck.final_value)
-		{
-            player_deck.win_status = WIN_STATUS.PUSH;
-		}
-		else
-		{
-            player_deck.win_status = WIN_STATUS.LOSE;
-		}
-        dealEnd();
-	}
-
-    private void dealEnd()
-	{
-        dealEnded(); // For disabling Dealing buttons on screen
-        playerwintext.text = player_deck.win_status.ToString();
-		switch (player_deck.win_status)
-		{
-			case WIN_STATUS.WIN:
-            case WIN_STATUS.BLACKJACK:
-                doublebetMoney();
-                takeBetMoney();
-                break;
-            case WIN_STATUS.PUSH:
-                takeBetMoney();
-                break;
-            case WIN_STATUS.BUST:
-            case WIN_STATUS.LOSE:
-                removeBetMoney();
-                break;
-		}
-        SoundManager.PlayWinText(player_deck.win_status);
-        StartCoroutine(DealEndEnumerator());
-	}
-
-    private IEnumerator DealEndEnumerator()
-	{
-        yield return new WaitForSeconds(WAITING_TIME);
-        resetDeck();
-	}
-
-	private void checkInitialWinStatus()
-	{
-        WIN_STATUS player_win_status = player_deck.win_status;
-
-		if( player_win_status== WIN_STATUS.BLACKJACK ||player_win_status == WIN_STATUS.BUST)
-        {
-            dealEnd();
-        }
-	}
-
-    private void checkPostWinStatus()
-	{
-        WIN_STATUS player_win_status = player_deck.win_status;
-
-        if(player_win_status == WIN_STATUS.BUST)
-		{
-            dealEnd();
-            return;
-		}
-
-        if(player_win_status == WIN_STATUS.BLACKJACK)
-		{
-            playDealer();
-		}
-
-    }
-
-	public void startDeal()
-	{
-
         playerAddCard();
         dealerAddCard();
 
@@ -184,6 +34,30 @@ public abstract class DeckManager : MonoBehaviour
         dealerAddCard();
 
         checkInitialWinStatus();
+    }
+
+    private void playerAddCard()
+    {
+        SoundManager.PlayCardMovingSound();
+        player_deck.AddCard(cards.Pop());
+        printStack();
+    }
+
+    private void dealerAddCard()
+	{
+        SoundManager.PlayCardMovingSound();
+        dealer_deck.AddCard(cards.Pop());
+        printStack();
+    }
+
+    private void checkInitialWinStatus()
+    {
+        WIN_STATUS player_win_status = player_deck.win_status;
+
+        if (player_win_status == WIN_STATUS.BLACKJACK || player_win_status == WIN_STATUS.BUST)
+        {
+            dealEnd();
+        }
     }
 
     public void playerHit() // UI Button
@@ -199,27 +73,109 @@ public abstract class DeckManager : MonoBehaviour
         playDealer();
     }
 
+    private void playDealer()
+	{
+        player_deck.Stayed();
+        dealer_deck.PlayerStayed();
 
-	#region Bet Amount
+        while(dealer_deck.final_value < 17) dealerAddCard();
 
-	private void removeBetMoney()
-    {
-        _betamount = 0;
+        if(dealer_deck.final_value > 21 || player_deck.final_value > dealer_deck.final_value)
+            player_deck.win_status = WIN_STATUS.WIN;
+        else if(player_deck.final_value == dealer_deck.final_value)
+            player_deck.win_status = WIN_STATUS.PUSH;
+		else
+            player_deck.win_status = WIN_STATUS.LOSE;
+
+        dealEnd();
+	}
+
+     private void checkPostWinStatus()
+	{
+        WIN_STATUS player_win_status = player_deck.win_status;
+
+        if(player_win_status == WIN_STATUS.BUST)
+		{
+            dealEnd();
+            return;
+		}
+
+        if(player_win_status == WIN_STATUS.BLACKJACK)
+            playDealer();
     }
 
-    private void takeBetMoney()
+    private void dealEnd()
+	{
+        DisableDealOptions();
+        WIN_STATUS win_status = player_deck.win_status;
+
+        playerwintext.text = Enum.GetName(typeof(WIN_STATUS),player_deck.win_status);
+        SoundManager.PlayWinText(win_status);
+
+        if (win_status == WIN_STATUS.WIN || win_status == WIN_STATUS.BLACKJACK)
+            playerdata.increaseCoins(bet_amount * Constants.DOUBLE);
+
+        StartCoroutine(DealEndEnumerator());
+	}
+
+    private IEnumerator DealEndEnumerator()
     {
-        playerdata.increaseCoins(_betamount);
+        yield return new WaitForSeconds(Constants.WAITING_TIME);
+        resetDeck();
     }
 
-    private void doublebetMoney()
+    protected void initializeDeck()
     {
-        _betamount = _betamount * 2;
+        playerdata = Resources.Load<PlayerData>(Constants.PLAYER_DATA_PATH);
+        cards = new Stack<Card>();
+        finished_cards = new List<Card>();
+        player_deck.InitializeDeckk();
+        dealer_deck.InitializeDeckk();
+        playerwintext.text = "";
+        generateDeck();
     }
 
-	#endregion
+    private void generateDeck()
+    {
+        GameObject card_prefab = Resources.Load<GameObject>(Constants.CARD_PREFAB_PATH);
+        Sprite[] cardsprites = Resources.LoadAll<Sprite>(Constants.CARD_FRONT_IMAGE_PATH);
+        foreach (Sprite sprite in cardsprites)
+        {
+            string name = sprite.name;
 
-	#region Test
+            if (name == "Joker_Color" || name == "Joker_Monochrome") continue;
+
+            int number = int.Parse(name.Substring(name.Length - 2));
+            GameObject temp = Instantiate(card_prefab);
+            temp.TryGetComponent<Card>(out Card card);
+            card.GenerateCard(sprite, number);
+            cards.Push(card);
+        }
+        cards.Shuffle();
+        printStack();
+    }
+
+    public void resetDeck()
+    {
+        playerwintext.text = "";
+        player_deck.ResetDeck(finished_cards);
+        dealer_deck.ResetDeck(finished_cards);
+        bet_amount = 0;
+        if (cards.Count <= 15)
+        {
+            foreach (Card finished_card in finished_cards)
+            {
+                cards.Push(finished_card);
+            }
+            finished_cards.Clear();
+            SoundManager.PlayShuffleSound();
+            cards.Shuffle();
+            // TODO: play animation
+        }
+        nextDeal();
+    }
+
+    #region Test
 
     private void printStack()
 	{

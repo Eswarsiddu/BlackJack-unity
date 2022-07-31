@@ -11,14 +11,12 @@ public class GameScreen : MonoBehaviour
 	[SerializeField] private Scrollbar scrollbar;
 	[SerializeField] private Button backbutton;
 
-	[SerializeField] private PlayerData playerdata;
+	private PlayerData playerdata;
 
 	private int minvalue;
 	private int maxvalue; // TODO: Set min and values of table based on coins
 	// TODO: OR Keep Poker Coins
 	private int betamount;
-
-	private const float PRECENT = 0.2f;
 
 	[SerializeField] private TextMeshProUGUI min_text;
 	[SerializeField] private TextMeshProUGUI max_text;
@@ -27,11 +25,17 @@ public class GameScreen : MonoBehaviour
 	[SerializeField] private GameObject betarea;
 	[SerializeField] private GameObject dealarea;
 
+
+	private void Awake()
+	{
+		playerdata = Resources.Load<PlayerData>(Constants.PLAYER_DATA_PATH);
+	}
+
 	void Start()
 	{
 		playerdata.increaseCoins(0);
 		deckmanager.nextDeal = nextDeal;
-		deckmanager.dealEnded = dealEnd;
+		deckmanager.DisableDealOptions = dealEnd;
 		backbutton.onClick.AddListener(SoundManager.PlayUIElementClickSound);
 	}
 
@@ -50,12 +54,13 @@ public class GameScreen : MonoBehaviour
 	private void OnDisable()
 	{
 		playerdata.UpdateCoins -= UpdateCoinsText;
+		deckmanager.resetDeck();
 	}
 
 	public void StartDeal()
 	{
 		SoundManager.PlayUIElementClickSound();
-		deckmanager.betamount = betamount;
+		deckmanager.SetBetAmount(betamount);
 		betarea.SetActive(false);
 		dealarea.SetActive(true);
 		deckmanager.startDeal();
@@ -71,8 +76,8 @@ public class GameScreen : MonoBehaviour
 	{
 		betarea.SetActive(true);
 		dealarea.SetActive(false);
-		minvalue = (int)(playerdata.coins * PRECENT);
-		maxvalue = (int)(playerdata.coins * (1 - PRECENT));
+		minvalue = (int)(playerdata.coins * Constants.PRECENT);
+		maxvalue = (int)(playerdata.coins * (1 - Constants.PRECENT));
 		min_text.text = minvalue.ToString();
 		max_text.text = maxvalue.ToString();
 		CalculateBetAmount();

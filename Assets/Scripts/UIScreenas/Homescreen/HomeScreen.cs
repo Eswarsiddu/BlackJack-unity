@@ -5,17 +5,17 @@ using UnityEngine;
 public class HomeScreen : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI coins_text;
-	[SerializeField] private PlayerData playerdata;
+	private PlayerData playerdata;
 
-	void Start()
+	private void Awake()
 	{
-		playerdata.increaseCoins(0);
+		playerdata = Resources.Load<PlayerData>(Constants.PLAYER_DATA_PATH);
 	}
 
 	private void OnEnable()
 	{
 		playerdata.UpdateCoins += UpdateCoinsText;
-		playerdata.increaseCoins(0);
+		playerdata.RefreshCoinsText();
 	}
 
 	private void OnDisable()
@@ -32,4 +32,5 @@ public class HomeScreen : MonoBehaviour
 	{
 		playerdata.ResetCoins();
 	}
+
 }

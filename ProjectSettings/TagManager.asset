@@ -3,7 +3,17 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Back
+  - Haptic
+  - Sound
+  - HomeScreen
+  - Total1
+  - Total2
+  - Total
+  - FinalScore
+  - PlayerDeck
+  - DealerDeck
   layers:
   - Default
   - TransparentFX
