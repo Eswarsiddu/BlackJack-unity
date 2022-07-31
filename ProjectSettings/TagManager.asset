@@ -12,6 +12,8 @@ TagManager:
   - Total2
   - Total
   - FinalScore
+  - PlayerDeck
+  - DealerDeck
   layers:
   - Default
   - TransparentFX
