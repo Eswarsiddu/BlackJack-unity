@@ -11,12 +11,15 @@ public static class TAGS
     public const string TOTAL2 = "Total2";
     public const string TOTAL = "Total";
     public const string FINAL_SCORE = "FinalScore";
+    public const string PLAYER_DECK = "PlayerDeck";
+    public const string DEALER_DECk = "DealerDeck";
 }
 
 public static class Constants
 {
     public const int DEFAULT_COINS = 500;
     public const float PRECENT = 0.2f;
+    public const int DOUBLE = 2;
 
     public const float WAITING_TIME = 3f;
 
@@ -35,8 +38,8 @@ public static class Constants
 
     public static Transform offsiteCardsParent;
 
-    // Stack Extention
-    public static void Shuffle<T>(this Stack<T> stack)
+	// Stack Extention
+	public static void Shuffle<T>(this Stack<T> stack)
     {
         List<T> l = new List<T>();
         int n = stack.Count;

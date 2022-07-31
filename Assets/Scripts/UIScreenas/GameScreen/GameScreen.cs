@@ -60,7 +60,7 @@ public class GameScreen : MonoBehaviour
 	public void StartDeal()
 	{
 		SoundManager.PlayUIElementClickSound();
-		deckmanager.betamount = betamount;
+		deckmanager.SetBetAmount(betamount);
 		betarea.SetActive(false);
 		dealarea.SetActive(true);
 		deckmanager.startDeal();
