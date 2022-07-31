@@ -60,7 +60,7 @@ public abstract class DeckManager : MonoBehaviour
         printStack();
     }
 
-    protected void resetDeck()
+    public void resetDeck()
 	{
         playerwintext.text = "";
         player_deck.ResetDeck(finished_cards);

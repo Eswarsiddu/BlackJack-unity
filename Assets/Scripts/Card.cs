@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class Card : MonoBehaviour
@@ -62,7 +61,7 @@ public class Card : MonoBehaviour
 
 	public override string ToString()
 	{
-		return value.ToString();
+		return _value.ToString();
 	}
 
 	#endregion

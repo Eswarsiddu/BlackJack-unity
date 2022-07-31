@@ -32,4 +32,5 @@ public class HomeScreen : MonoBehaviour
 	{
 		playerdata.ResetCoins();
 	}
+
 }

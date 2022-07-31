@@ -14,7 +14,6 @@ public class GameManager : DeckManager
         initializeDeck();
     }
 
-
     #region Testing
     [Header("\n\nTesting")]
     public Button PlayButton;

@@ -12,6 +12,5 @@ public class HapticManager : MonoBehaviour
 		settings = Resources.Load<Settings>(Constants.SETTINGS_PATH);
 	}
 
-	
 	public static void Vibrate() { if (_this.settings.haptic) Handheld.Vibrate(); }
 }

@@ -39,7 +39,6 @@ public class SettingsManager : MonoBehaviour
         sound_image.color = settings.sound ? defaultcolor : changed_color;
     }
 
-
     private void Awake()
     {
         settings = Resources.Load<Settings>(Constants.SETTINGS_PATH);

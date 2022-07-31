@@ -54,6 +54,7 @@ public class GameScreen : MonoBehaviour
 	private void OnDisable()
 	{
 		playerdata.UpdateCoins -= UpdateCoinsText;
+		deckmanager.resetDeck();
 	}
 
 	public void StartDeal()

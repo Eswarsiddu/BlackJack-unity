@@ -15,7 +15,6 @@ public static class TAGS
 
 public static class Constants
 {
-
     public const int DEFAULT_COINS = 500;
     public const float PRECENT = 0.2f;
 
@@ -30,12 +29,13 @@ public static class Constants
     public const string CARD_BACK_RED_IMAGE_PATH = "PlayingCardsBack/Red";
     public const string CARD_PREFAB_PATH = "Prefabs/card";
 
-    private static System.Random rng = new System.Random();
+    private static System.Random random = new System.Random();
 
     public static Sprite CARDBACKSPRITE = Resources.Load<Sprite>(CARD_BACK_BLACK_IMAGE_PATH);
 
     public static Transform offsiteCardsParent;
 
+    // Stack Extention
     public static void Shuffle<T>(this Stack<T> stack)
     {
         List<T> l = new List<T>();
@@ -49,7 +49,7 @@ public static class Constants
 		while (n > 1)
 		{
             n--;
-            k = rng.Next(n + 1);
+            k = random.Next(n + 1);
             value = l[k];
             l[k] = l[n];
             l[n] = value;

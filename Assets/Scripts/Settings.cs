@@ -20,4 +20,5 @@ public class Settings : ScriptableObject
 	public bool haptic { get => _haptic; }
 
 	public bool sound { get => _sound; }
+
 }

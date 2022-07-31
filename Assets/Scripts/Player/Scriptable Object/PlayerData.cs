@@ -9,7 +9,6 @@ public class PlayerData : ScriptableObject
 
 	public int coins { get => _coins; }
 
-
 	public void RefreshCoinsText()
 	{
 		UpdateCoins.Invoke(null, EventArgs.Empty);
@@ -19,6 +18,7 @@ public class PlayerData : ScriptableObject
 	{
 		_coins += amount;
 		RefreshCoinsText();
+		SoundManager.PlayIncreaseCoinsSound();
 	}
 
 	public void decreaseCoins(int amount)
