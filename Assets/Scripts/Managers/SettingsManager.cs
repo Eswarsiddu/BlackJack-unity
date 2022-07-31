@@ -8,13 +8,41 @@ public class SettingsManager : MonoBehaviour
     private Button haptic;
     private Button sound;
 
+    private Image haptic_image;
+    private Image sound_image;
+
     private Color defaultcolor;
     [SerializeField] private Color changed_color;
 
-
-	private void Awake()
+    public void ToggleHaptic() // UI Button
 	{
-        settings= Resources.Load<Settings>(Constants.SETTINGS_PATH);
+        settings.ToggleHaptic();
+        HapticManager.Vibrate();
+        UpdateHapticGraphics();
+        SoundManager.PlayUIElementClickSound();
+    }
+
+    public void ToggleSound() // UI Button
+    {
+        settings.ToggleSound();
+        SoundManager.SoundToggled();
+        UpdateSoundGraphics();
+    }
+
+    private void UpdateHapticGraphics()
+    {
+        haptic_image.color = settings.haptic ? defaultcolor : changed_color;
+    }
+
+    private void UpdateSoundGraphics()
+    {
+        sound_image.color = settings.sound ? defaultcolor : changed_color;
+    }
+
+
+    private void Awake()
+    {
+        settings = Resources.Load<Settings>(Constants.SETTINGS_PATH);
         foreach (Transform child in transform)
         {
             switch (child.tag)
@@ -25,57 +53,22 @@ public class SettingsManager : MonoBehaviour
                 case TAGS.SOUND:
                     sound = child.GetComponent<Button>();
                     break;
-                default:
-                    break;
             }
         }
     }
 
-	void Start()
+    void Start()
     {
         defaultcolor = haptic.colors.normalColor;
-        UpdateHapticGraphics();
-        UpdateSoundGraphics();
+
         haptic.onClick.AddListener(ToggleHaptic);
         sound.onClick.AddListener(ToggleSound);
-    }
 
-    private void UpdateHapticGraphics()
-	{
-        if (settings.haptic)
-		{
-            haptic.GetComponent<Image>().color = defaultcolor;
-		}
-		else
-		{
-            haptic.GetComponent<Image>().color = changed_color;
-        }
-    }
+        haptic_image = haptic.GetComponent<Image>();
+        sound_image = sound.GetComponent<Image>();
 
-    private void UpdateSoundGraphics()
-    {
-        if (settings.sound)
-        {
-            sound.GetComponent<Image>().color = defaultcolor;
-        }
-        else
-        {
-            sound.GetComponent<Image>().color = changed_color;
-        }
-    }
-
-    public void ToggleHaptic() // UI Button
-	{
-        SoundManager.PlayUIElementClickSound();
-        settings.ToggleHaptic();
         UpdateHapticGraphics();
-        HapticManager.Vibrate();
-    }
-
-    public void ToggleSound() // UI Button
-    {
-        settings.ToggleSound();
-        SoundManager.SoundToggled();
         UpdateSoundGraphics();
     }
+
 }
