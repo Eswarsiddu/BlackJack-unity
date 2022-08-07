@@ -161,6 +161,9 @@ public abstract class DeckManager : MonoBehaviour
         player_deck.ResetDeck(finished_cards);
         dealer_deck.ResetDeck(finished_cards);
         bet_amount = 0;
+
+        if (cards == null) return;
+
         if (cards.Count <= 15)
         {
             foreach (Card finished_card in finished_cards)

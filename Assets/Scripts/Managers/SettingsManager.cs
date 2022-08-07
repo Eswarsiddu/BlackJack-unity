@@ -47,12 +47,13 @@ public class SettingsManager : MonoBehaviour
             switch (child.tag)
             {
                 case TAGS.HAPTIC:
-                    haptic = child.GetComponent<Button>();
-                    break;
+                    haptic = child.GetComponent<Button>(); break;
+
                 case TAGS.SOUND:
-                    sound = child.GetComponent<Button>();
-                    break;
+                    sound = child.GetComponent<Button>(); break;
             }
+
+            if(haptic != null && sound != null) break;
         }
     }
 

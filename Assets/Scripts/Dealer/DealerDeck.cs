@@ -140,14 +140,15 @@ public class DealerDeck : MonoBehaviour
 
 	public virtual void InitializeDeckk()
 	{
-		ResetDeck();
 		cards = new List<Card>();
+		ResetDeck();
 		RemoveTestCard();
 	}
 
 	public virtual void ResetDeck(List<Card> finished_deck)
 	{
 		ResetDeck();
+		if (finished_deck == null) return; // null only at initial
 		foreach (Card card in cards)
 		{
 			card.ResetCard();
