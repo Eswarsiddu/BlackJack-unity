@@ -11,7 +11,7 @@ public class SettingsManager : MonoBehaviour
     private Image haptic_image;
     private Image sound_image;
 
-    private Color defaultcolor;
+    [SerializeField] private Color defaultcolor;
     [SerializeField] private Color changed_color;
 
     public void ToggleHaptic() // UI Button
@@ -59,7 +59,7 @@ public class SettingsManager : MonoBehaviour
 
     void Start()
     {
-        defaultcolor = haptic.colors.normalColor;
+        //defaultcolor = haptic.colors.normalColor;
 
         haptic.onClick.AddListener(ToggleHaptic);
         sound.onClick.AddListener(ToggleSound);
