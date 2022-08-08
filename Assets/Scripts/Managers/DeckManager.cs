@@ -158,11 +158,10 @@ public abstract class DeckManager : MonoBehaviour
     public void resetDeck()
     {
         playerwintext.text = "";
-        player_deck.ResetDeck(finished_cards);
-        dealer_deck.ResetDeck(finished_cards);
         bet_amount = 0;
 
-        if (cards == null) return;
+        player_deck.ResetDeck(finished_cards);
+        dealer_deck.ResetDeck(finished_cards);
 
         if (cards.Count <= 15)
         {
@@ -175,7 +174,10 @@ public abstract class DeckManager : MonoBehaviour
             cards.Shuffle();
             // TODO: play animation
         }
-        nextDeal();
+
+        //if (nextDeal == null) return;
+        nextDeal?.Invoke();
+        //nextDeal();
     }
 
     #region Test
