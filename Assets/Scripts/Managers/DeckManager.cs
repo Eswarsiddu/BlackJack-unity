@@ -17,6 +17,7 @@ public abstract class DeckManager : MonoBehaviour
     [SerializeField] private DealerDeck dealer_deck;
 
     [SerializeField] private TextMeshProUGUI playerwintext;
+    [SerializeField] private float seconds;
 
 
     public void SetBetAmount(int bet_amount)
@@ -120,7 +121,8 @@ public abstract class DeckManager : MonoBehaviour
 
     private IEnumerator DealEndEnumerator()
     {
-        yield return new WaitForSeconds(Constants.WAITING_TIME);
+        //        yield return new WaitForSeconds(Constants.WAITING_TIME);
+        yield return new WaitForSeconds(seconds);
         resetDeck();
     }
 
