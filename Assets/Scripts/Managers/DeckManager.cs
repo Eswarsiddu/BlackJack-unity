@@ -159,6 +159,9 @@ public abstract class DeckManager : MonoBehaviour
 
     public void resetDeck()
     {
+
+        if (cards == null || finished_cards == null) return;
+        if (cards.Count <= 0) return;
         playerwintext.text = "";
         bet_amount = 0;
 
@@ -167,10 +170,7 @@ public abstract class DeckManager : MonoBehaviour
 
         if (cards.Count <= 15)
         {
-            foreach (Card finished_card in finished_cards)
-            {
-                cards.Push(finished_card);
-            }
+            foreach (Card finished_card in finished_cards) cards.Push(finished_card);
             finished_cards.Clear();
             SoundManager.PlayShuffleSound();
             cards.Shuffle();
