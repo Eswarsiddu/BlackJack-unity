@@ -5,6 +5,13 @@ using UnityEngine.UI;
 
 public class GameScreen : MonoBehaviour
 {
+	private static class AnimationNames
+	{
+		public static string START_DEAL = "StartDeal";
+		public static string NEW_DEAL = "NewDeal";
+		public static string DEAL_END = "DealEnd";
+	};
+
 	[SerializeField] private DeckManager deckmanager;
 	[SerializeField] private TextMeshProUGUI coins_text;
 
@@ -29,6 +36,7 @@ public class GameScreen : MonoBehaviour
 	private void Awake()
 	{
 		playerdata = Resources.Load<PlayerData>(Constants.PLAYER_DATA_PATH);
+		string s = AnimationNames.START_DEAL;
 	}
 
 	void Start()
@@ -57,19 +65,22 @@ public class GameScreen : MonoBehaviour
 		deckmanager.resetDeck();
 	}
 
+	public void StartDealAnimationCompleted()
+	{
+
+	}
+
 	public void StartDeal()
 	{
 		SoundManager.PlayUIElementClickSound();
 		deckmanager.SetBetAmount(betamount);
-		betarea.SetActive(false);
-		dealarea.SetActive(true);
+
 		deckmanager.startDeal();
 	}
 
 	private void dealEnd()
 	{
-		betarea.SetActive(false);
-		dealarea.SetActive(false);
+
 	}
 
 	private void nextDeal()
