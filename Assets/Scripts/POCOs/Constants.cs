@@ -13,6 +13,9 @@ public static class TAGS
     public const string FINAL_SCORE = "FinalScore";
     public const string PLAYER_DECK = "PlayerDeck";
     public const string DEALER_DECk = "DealerDeck";
+
+    public const string COIN_OBJECT = "coins";
+    public const string COIN_TEXT_OBJECT = "coinstextobject";
 }
 
 public static class Constants

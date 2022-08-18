@@ -14,6 +14,19 @@ TagManager:
   - FinalScore
   - PlayerDeck
   - DealerDeck
+  - betselect
+  - dealarea
+  - betamount
+  - coinstextobject
+  - coins
+  - dealing
+  - wintext
+  - scrollbar
+  - mintext
+  - maxtext
+  - startdeal
+  - hit
+  - stay
   layers:
   - Default
   - TransparentFX
