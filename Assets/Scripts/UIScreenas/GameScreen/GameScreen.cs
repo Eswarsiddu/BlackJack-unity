@@ -252,8 +252,8 @@ public class GameScreen : MonoBehaviour
 		yield return new WaitForSeconds(0.25f);
 		deal_area_obj.SetActive(false);
 	}
-	
 
+	public GameObject bet_text_object;
 	private void nextDeal()
 	{
 		minvalue = (int)(playerdata.coins * Constants.PRECENT);
@@ -274,8 +274,7 @@ public class GameScreen : MonoBehaviour
 
 	private IEnumerator nextDealenummerator()
 	{
-		yield return null;
-		if (bet_select_movment.DifferenceX() < 0.1f)
+		yield return new WaitForSeconds(0.7f);
 			bet_text.gameObject.SetActive(true);
 	}
 
