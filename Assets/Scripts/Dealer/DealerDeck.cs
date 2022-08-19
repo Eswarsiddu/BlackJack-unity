@@ -5,8 +5,9 @@ using System.Linq;
 
 public class DealerDeck : MonoBehaviour
 {
-	private const int DECK_PARENT_POSITION = 0;
-	private const int UIELEMENTS_POSITION = 2;
+	private const string ADD_CARD_TRIGGER = "AddCard";
+	private const int DECK_PARENT_POSITION = 1;
+	private const int UIELEMENTS_POSITION = 3;
 
 	protected int total1;
 	protected int total2;
@@ -24,13 +25,16 @@ public class DealerDeck : MonoBehaviour
 	private Transform deck_parent;
 
 	private TextMeshPro final_value_text;
+	
+	private Animator animator;
 
 	public void AddCard(Card card)
 	{
 		ChangeCardState(card);
 		cards.Add(card);
 		CalculateTotal();
-		AddCardGUI(card);
+		animator.SetTrigger(ADD_CARD_TRIGGER);
+		//AddCardGUI();
 	}
 
 	protected virtual void ChangeCardState(Card card)
@@ -79,10 +83,10 @@ public class DealerDeck : MonoBehaviour
 		final_value = total2;
 	}
 
-	private void AddCardGUI(Card card)
+	public void AddCardGUI()
 	{
 		prev_pos.x += 0.2f;
-
+		Card card = cards[cards.Count - 1];
 		card.gameObject.SetActive(true);
 		card.UpdateDetails(deck_parent, prev_pos, prev_order_layer++);
 
@@ -118,6 +122,7 @@ public class DealerDeck : MonoBehaviour
 
 	private void Awake()
 	{
+		animator = GetComponent<Animator>();
 		deck_parent = transform.GetChild(DECK_PARENT_POSITION);
 		score_object = transform.GetChild(UIELEMENTS_POSITION).gameObject;
 
