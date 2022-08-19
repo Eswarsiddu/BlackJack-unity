@@ -268,7 +268,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &89634289
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4315,7 +4315,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1154790957
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8235,6 +8235,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74d5c94567e1ac645818dd9d0307fec3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wintext_object: {fileID: 1154790956}
   deckmanager: {fileID: 828427587}
   coins_text: {fileID: 1166648742}
   scrollbar: {fileID: 1730594101}
@@ -8248,7 +8249,6 @@ MonoBehaviour:
   deal_object: {fileID: 1971679905}
   hit_object: {fileID: 1040753272}
   stay_object: {fileID: 1490483543}
-  bet_text_target_pos: {x: 0, y: 0, z: 0}
   startdeal_bool: 0
   hit_bool: 0
   stay_bool: 0

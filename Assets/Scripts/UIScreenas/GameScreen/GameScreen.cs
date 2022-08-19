@@ -88,8 +88,12 @@ public class GameScreen : MonoBehaviour
 		public const string HIT_OBJECT = "hit";
 		public const string STAY_OBJECT = "stay";
 
+		public const string WIN_TEXT_TRIGER = "BetArea";
+
 		public const float ANIMATION_SPEED = 0.075f;
 	};
+
+	[SerializeField] private GameObject wintext_object;
 
 	[SerializeField] private DeckManager deckmanager;
 	[SerializeField] private TextMeshProUGUI coins_text;
@@ -120,12 +124,14 @@ public class GameScreen : MonoBehaviour
 	private Movement bet_amount_movement;
 
 	private List<Movement> movements;
-	Vector3 bet_text_target_pos;
+	private Vector3 bet_text_target_pos;
+	private Animator animator;
 
 	private void Awake()
 	{
 		playerdata = Resources.Load<PlayerData>(Constants.PLAYER_DATA_PATH);
-		bet_text_target_pos = new Vector3(0, -deal_area_obj.GetComponent<RectTransform>().rect.height, 0);
+		bet_text_target_pos = new Vector3(0, bet_text.GetComponent<RectTransform>().rect.height, 0);
+		//bet_text_target_pos = new Vector3(0, -100, 0);
 
 		bet_select_movment = new Movement(bet_select_object);
 		bet_select_movment.SetOffScreenPosiiton();
@@ -190,6 +196,8 @@ public class GameScreen : MonoBehaviour
 		deckmanager.nextDeal = nextDeal;
 		deckmanager.DisableDealOptions = dealEnd;
 		backbutton.onClick.AddListener(SoundManager.PlayUIElementClickSound);
+
+		animator = GetComponent<Animator>();
 	}
 
 	public void CalculateBetAmount()
@@ -234,6 +242,8 @@ public class GameScreen : MonoBehaviour
 	{
 		hit_movement.ChangeTagetPosition();
 		stay_movement.ChangeTagetPosition();
+		wintext_object.SetActive(true);
+		animator.SetTrigger(InnerConstants.WIN_TEXT_TRIGER);
 		StartCoroutine(dealEndEnnumerator());
 	}
 
@@ -253,9 +263,18 @@ public class GameScreen : MonoBehaviour
 		bet_amount_movement.current_position = bet_amount_movement.original_position;
 		bet_amount_movement.target_position = bet_amount_movement.original_position;
 		deal_area_obj.SetActive(true);
+		wintext_object.SetActive(false);
 		bet_select_object.SetActive(true);
+		bet_text.gameObject.SetActive(false);
 		bet_select_movment.ChangeTagetPosition(reverse: true);
 		deal_object.SetActive(false);
+		StartCoroutine(nextDealenummerator());
+	}
+
+	private IEnumerator nextDealenummerator()
+	{
+		yield return new WaitForSeconds(0.25f);
+		bet_text.gameObject.SetActive(true);
 	}
 
 	private void UpdateCoinsText(object sender, EventArgs e)
