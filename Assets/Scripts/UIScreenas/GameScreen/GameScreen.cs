@@ -252,6 +252,7 @@ public class GameScreen : MonoBehaviour
 		yield return new WaitForSeconds(0.25f);
 		deal_area_obj.SetActive(false);
 	}
+	
 
 	private void nextDeal()
 	{
@@ -273,8 +274,9 @@ public class GameScreen : MonoBehaviour
 
 	private IEnumerator nextDealenummerator()
 	{
-		yield return new WaitForSeconds(0.25f);
-		bet_text.gameObject.SetActive(true);
+		yield return null;
+		if (bet_select_movment.DifferenceX() < 0.1f)
+			bet_text.gameObject.SetActive(true);
 	}
 
 	private void UpdateCoinsText(object sender, EventArgs e)

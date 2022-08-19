@@ -19,10 +19,12 @@ public class GameManager : DeckManager
     public Button PlayButton;
     public Button HitButton;
     public Button StayButton;
+    public bool play = false;
 	private void Update()
 	{
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.P) || play)
 		{
+            play = false;
             PlayButton.onClick.Invoke();
         }
 
