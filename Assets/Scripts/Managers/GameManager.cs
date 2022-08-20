@@ -20,7 +20,7 @@ public class GameManager : DeckManager
     public Button HitButton;
     public Button StayButton;
     public bool play = false;
-	private void Update()
+	protected override void VirtualUpdate()
 	{
         if (Input.GetKeyDown(KeyCode.P) || play)
 		{

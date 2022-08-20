@@ -28,13 +28,14 @@ public class DealerDeck : MonoBehaviour
 	
 	private Animator animator;
 
-	public void AddCard(Card card)
+	private AnimationStateReference animation_completed;
+	public void AddCard(Card card,AnimationStateReference animation_completed)
 	{
+		this.animation_completed = animation_completed;
+		this.animation_completed.running = true;
 		ChangeCardState(card);
 		cards.Add(card);
-		CalculateTotal();
 		animator.SetTrigger(ADD_CARD_TRIGGER);
-		//AddCardGUI();
 	}
 
 	protected virtual void ChangeCardState(Card card)
@@ -46,6 +47,22 @@ public class DealerDeck : MonoBehaviour
 		}
 
 		card.TurnFaceUp();
+	}
+
+	public void AddCardGUI()
+	{
+		prev_pos.x += 0.2f;
+		Card card = cards[cards.Count - 1];
+		card.gameObject.SetActive(true);
+		card.UpdateDetails(deck_parent, prev_pos, prev_order_layer++);
+
+		if (!score_object.activeInHierarchy)
+			score_object.SetActive(true);
+		CalculateTotal();
+		RearrangeDeckPosition();
+		UpdateScore();
+		animation_completed.value = true;
+		animation_completed.running = false;
 	}
 
 	protected virtual void CalculateTotal()
@@ -81,20 +98,6 @@ public class DealerDeck : MonoBehaviour
 		}
 
 		final_value = total2;
-	}
-
-	public void AddCardGUI()
-	{
-		prev_pos.x += 0.2f;
-		Card card = cards[cards.Count - 1];
-		card.gameObject.SetActive(true);
-		card.UpdateDetails(deck_parent, prev_pos, prev_order_layer++);
-
-		if (!score_object.activeInHierarchy)
-			score_object.SetActive(true);
-
-		RearrangeDeckPosition();
-		UpdateScore();
 	}
 
 	private void RearrangeDeckPosition()
