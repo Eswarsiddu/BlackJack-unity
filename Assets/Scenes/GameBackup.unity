@@ -3141,6 +3141,7 @@ MonoBehaviour:
   dealer_deck: {fileID: 1462931701}
   playerwintext: {fileID: 1154790958}
   seconds: 2
+  player_hit: 0
   cardparent: {fileID: 1206432044}
   PlayButton: {fileID: 504766957}
   HitButton: {fileID: 1040753274}
