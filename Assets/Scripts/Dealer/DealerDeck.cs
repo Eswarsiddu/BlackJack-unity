@@ -61,7 +61,7 @@ public class DealerDeck : MonoBehaviour
 		CalculateTotal();
 		RearrangeDeckPosition();
 		UpdateScore();
-		animation_completed.value = true;
+		animation_completed.value = !animation_completed.value;
 		animation_completed.running = false;
 	}
 

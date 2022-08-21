@@ -14,9 +14,8 @@ public static class Extentions
         }
         T value;
         int k;
-        while (n > 1)
+        while (--n > 1)
         {
-            n--;
             k = Constants.GetRandomNumber(n + 1);
             value = l[k];
             l[k] = l[n];
@@ -39,9 +38,9 @@ public class AnimationStateReference
         this.running = running;
 	}
 
-	public void Reset()
+	public void Reset(bool value = false)
 	{
-        value = false;
+        this.value = value;
         running = false;
 	}
 

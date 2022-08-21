@@ -195,6 +195,7 @@ public class GameScreen : MonoBehaviour
 		playerdata.RefreshCoinsText();
 		deckmanager.nextDeal = nextDeal;
 		deckmanager.DisableDealOptions = dealEnd;
+		deckmanager.EnableDealOptions = EnableDealOptions;
 		backbutton.onClick.AddListener(SoundManager.PlayUIElementClickSound);
 
 		animator = GetComponent<Animator>();
@@ -226,13 +227,17 @@ public class GameScreen : MonoBehaviour
 		deckmanager.startDeal();
 		bet_amount_movement.target_position = bet_text_target_pos;
 		bet_select_movment.ChangeTagetPosition();
+
+		IEnumerator StartDealEnumerator(){
+			yield return new WaitForSeconds(0.5f);
+			bet_select_object.SetActive(false);
+		};
+
 		StartCoroutine(StartDealEnumerator());
 	}
 
-	private IEnumerator StartDealEnumerator()
+	public void EnableDealOptions()
 	{
-		yield return new WaitForSeconds(0.5f);
-		bet_select_object.SetActive(false);
 		deal_object.SetActive(true);
 		hit_movement.ChangeTagetPosition(reverse:true);
 		stay_movement.ChangeTagetPosition(reverse:true);

@@ -11,6 +11,7 @@ public abstract class DeckManager : MonoBehaviour
     private List<Card> finished_cards;
     public Action nextDeal;
     public Action DisableDealOptions;
+    public Action EnableDealOptions;
     private PlayerData playerdata;
 
     [SerializeField] private PlayerDeck player_deck;
@@ -37,20 +38,6 @@ public abstract class DeckManager : MonoBehaviour
         printStack();
     }
 
-    private void playerAddCard(AnimationStateReference animation_completed)
-    {
-        SoundManager.PlayCardMovingSound();
-        player_deck.AddCard(cards.Pop(),animation_completed);
-        printStack();
-    }
-
-    private void dealerAddCard(AnimationStateReference animation_completed)
-	{
-        SoundManager.PlayCardMovingSound();
-        dealer_deck.AddCard(cards.Pop(), animation_completed);
-        printStack();
-    }
-
     private void checkInitialWinStatus()
     {
         WIN_STATUS player_win_status = player_deck.win_status;
@@ -61,14 +48,20 @@ public abstract class DeckManager : MonoBehaviour
         }
     }
 
-    private AnimationStateReference add_card_animation_completed = new AnimationStateReference(true);
+    public bool player_hit;
 
     public void playerHit() // UI Button
     {
-        if (add_card_animation_completed.value && !add_card_animation_completed.running)
+		/*if (add_card_animation_completed.value && !add_card_animation_completed.running)
         {
             AddCard(add_card_animation_completed,player_deck);
             checkPostWinStatus();
+        }*/
+		if (!player_hit)
+		{
+            Debug.Log("player hit");
+            add_card_animation_completed.Reset();
+            player_hit = true;
         }
     }
 
@@ -78,28 +71,35 @@ public abstract class DeckManager : MonoBehaviour
         playDealer();
     }
 
+    private bool dealer_play;
+
     private void playDealer()
 	{
         player_deck.Stayed();
         dealer_deck.PlayerStayed();
+        add_card_animation_completed.Reset();
+        dealer_play = true;
 
-        while (dealer_deck.final_value < 17)
+       /* while (dealer_deck.final_value < 17)
         {
             if (add_card_animation_completed.value)
             {
                 AddCard(add_card_animation_completed, dealer_deck);
             }
-        }
+        }*/
+	}
 
-        if(dealer_deck.final_value > 21 || player_deck.final_value > dealer_deck.final_value)
+    private void DealerCompleted()
+	{
+        if (dealer_deck.final_value > 21 || player_deck.final_value > dealer_deck.final_value)
             player_deck.win_status = WIN_STATUS.WIN;
-        else if(player_deck.final_value == dealer_deck.final_value)
+        else if (player_deck.final_value == dealer_deck.final_value)
             player_deck.win_status = WIN_STATUS.PUSH;
-		else
+        else
             player_deck.win_status = WIN_STATUS.LOSE;
 
         dealEnd();
-	}
+    }
 
      private void checkPostWinStatus()
 	{
@@ -224,60 +224,92 @@ public abstract class DeckManager : MonoBehaviour
 
     private bool startdeal = false;
 
+    private AnimationStateReference add_card_animation_completed = new AnimationStateReference();
+
     private void Update()
 	{
-		if (startdeal)
-		{
+        if (startdeal)
+        {
             Debug.Log("Deal started");
-            if(!c1.running && !c1.value)
-			{
+            if (!c1.running && !c1.value)
+            {
                 AddCard(c1, player_deck);
-			}
-			else if(!c1.running)
-			{
+            }
+            else if (!c1.running)
+            {
                 if (!c2.running && !c2.value)
-				{
+                {
                     AddCard(c2, dealer_deck);
-				}
+                }
                 else if (!c2.running)
-				{
+                {
                     if (!c3.running && !c3.value)
-					{
+                    {
                         AddCard(c3, player_deck);
                     }
                     else if (!c3.running)
-					{
+                    {
                         if (!c4.running && !c4.value)
-						{
+                        {
                             AddCard(c4, dealer_deck);
                         }
                         else if (!c4.running)
-						{
+                        {
                             startdeal = false;
+                            EnableDealOptions();
                             checkInitialWinStatus();
                         }
 
                     }
 
                 }
-
             }
-
-
-
-            /*if (!c1.value && !c1.running)
-                AddCard(c1, player_deck);
-            else if (!c2.value && !c2.running)
-                AddCard(c2, dealer_deck);
-            else if (!c3.value && !c3.running)
-                AddCard(c3, player_deck);
-            else if (!c4.value && !c4.running)
-            {
-                AddCard(c4, dealer_deck);
-                checkInitialWinStatus();
-                startdeal = false;
-            }*/
         }
+        /*if (!c1.value && !c1.running)
+            AddCard(c1, player_deck);
+        else if (!c2.value && !c2.running)
+            AddCard(c2, dealer_deck);
+        else if (!c3.value && !c3.running)
+            AddCard(c3, player_deck);
+        else if (!c4.value && !c4.running)
+        {
+            AddCard(c4, dealer_deck);
+            checkInitialWinStatus();
+            startdeal = false;
+        }*/
+        if (player_hit)
+        {
+            if (!add_card_animation_completed.running && !add_card_animation_completed.value)
+            {
+                AddCard(add_card_animation_completed, player_deck);
+            }
+            else if (!add_card_animation_completed.running)
+            {
+                checkPostWinStatus();
+                player_hit = false;
+            }
+        }
+
+        if (dealer_play)
+        {
+            if (dealer_deck.final_value < 17)
+            {
+                if (!add_card_animation_completed.running && !add_card_animation_completed.value)
+                {
+                    AddCard(add_card_animation_completed, dealer_deck);
+                }
+                else if (!add_card_animation_completed.running)
+				{
+                    add_card_animation_completed.Reset();
+				}
+            }
+			else
+			{
+                dealer_play = false;
+                DealerCompleted();
+            }
+        }
+
         VirtualUpdate();
 	}
 
