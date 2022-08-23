@@ -121,6 +121,8 @@ public class DealerDeck : MonoBehaviour
 	public void PlayerStayed()
 	{
 		cards[0].TurnFaceUp();
+		CalculateTotal();
+		UpdateScore();
 	}
 
 	private void Awake()

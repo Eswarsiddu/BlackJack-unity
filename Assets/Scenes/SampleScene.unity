@@ -3140,7 +3140,7 @@ MonoBehaviour:
   player_deck: {fileID: 511028009}
   dealer_deck: {fileID: 1462931701}
   playerwintext: {fileID: 1154790958}
-  seconds: 2
+  seconds: 3
   cardparent: {fileID: 1206432044}
   PlayButton: {fileID: 504766957}
   HitButton: {fileID: 1040753274}
@@ -7868,7 +7868,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1971679906
 RectTransform:
   m_ObjectHideFlags: 0

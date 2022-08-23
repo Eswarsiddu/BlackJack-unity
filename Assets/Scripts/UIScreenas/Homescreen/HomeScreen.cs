@@ -28,7 +28,7 @@ public class HomeScreen : MonoBehaviour
         coins_text.text = playerdata.coins.ToString();
 	}
 
-	public void ResetCoins()
+	public void ResetCoins() // UI button
 	{
 		playerdata.ResetCoins();
 	}

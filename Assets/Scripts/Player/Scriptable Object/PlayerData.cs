@@ -9,6 +9,13 @@ public class PlayerData : ScriptableObject
 
 	public int coins { get => _coins; }
 
+	void ForceSerialization()
+	{
+#if UNITY_EDITOR
+		UnityEditor.EditorUtility.SetDirty(this);
+#endif
+	}
+
 	public void RefreshCoinsText()
 	{
 		UpdateCoins.Invoke(null, EventArgs.Empty);
@@ -17,6 +24,7 @@ public class PlayerData : ScriptableObject
 	public void increaseCoins(int amount)
 	{
 		_coins += amount;
+		ForceSerialization();
 		RefreshCoinsText();
 		SoundManager.PlayIncreaseCoinsSound();
 	}
@@ -24,11 +32,13 @@ public class PlayerData : ScriptableObject
 	public void decreaseCoins(int amount)
 	{
 		_coins -= amount;
+		ForceSerialization();
 		RefreshCoinsText();
 	}
 
 	public void ResetCoins()
 	{
+		Debug.Log("Resetting coins");
 		_coins = Constants.DEFAULT_COINS;
 		RefreshCoinsText();
 	}
