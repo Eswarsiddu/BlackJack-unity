@@ -38,8 +38,8 @@ public class PlayerData : ScriptableObject
 
 	public void ResetCoins()
 	{
-		Debug.Log("Resetting coins");
 		_coins = Constants.DEFAULT_COINS;
+		ForceSerialization();
 		RefreshCoinsText();
 	}
 

@@ -90,6 +90,9 @@ public class GameScreen : MonoBehaviour
 		public const float ANIMATION_SPEED = 0.075f;
 	};
 
+	[SerializeField] private GameObject home_Screen_object;
+	private HomeScreen home_screen_sript;
+
 	[SerializeField] private GameObject wintext_object;
 
 	[SerializeField] private DeckManager deckmanager;
@@ -140,6 +143,8 @@ public class GameScreen : MonoBehaviour
 
 		bet_amount_movement = new Movement(bet_text.gameObject);
 		bet_amount_movement.target_position = bet_amount_movement.current_position;
+
+		home_screen_sript = home_Screen_object.GetComponent<HomeScreen>();
 
 		movements = new List<Movement>();
 		movements.Add(bet_amount_movement);
@@ -201,6 +206,12 @@ public class GameScreen : MonoBehaviour
 	public void CalculateBetAmount()
 	{
 		betamount = minvalue + (int)((maxvalue - minvalue) * scrollbar.value);
+		if(minvalue == 0)
+		{
+			home_Screen_object.SetActive(true);
+			home_screen_sript.insufficentbalance();
+			gameObject.SetActive(false);
+		}
 		bet_text.text = betamount.ToString();
 	}
 
@@ -265,8 +276,8 @@ public class GameScreen : MonoBehaviour
 	public GameObject bet_text_object;
 	private void nextDeal()
 	{
-		minvalue = (int)(playerdata.coins * Constants.PRECENT);
-		maxvalue = (int)(playerdata.coins * (1 - Constants.PRECENT));
+		minvalue = Constants.GetMinimumBet(playerdata.coins);
+		maxvalue = playerdata.coins - minvalue;
 		min_text.text = minvalue.ToString();
 		max_text.text = maxvalue.ToString();
 		CalculateBetAmount();
