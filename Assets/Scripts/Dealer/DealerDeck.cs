@@ -152,13 +152,12 @@ public class DealerDeck : MonoBehaviour
 	{
 		cards = new List<Card>();
 		ResetDeck();
-		RemoveTestCard();
 	}
 
 	public virtual void ResetDeck(List<Card> finished_deck)
 	{
 		ResetDeck();
-		if (finished_deck == null) return; // null only at initial
+		if (finished_deck == null) return; 
 		foreach (Card card in cards)
 		{
 			card.ResetCard();
@@ -175,19 +174,5 @@ public class DealerDeck : MonoBehaviour
 		prev_pos.x = -0.2f;
 		score_object.SetActive(false);
 	}
-
-
-	#region Testing
-
-	[Header("\n\nTesing")]
-	public GameObject testingcard;
-
-
-	public void RemoveTestCard()
-	{
-		Destroy(testingcard);
-	}
-
-	#endregion
 
 }
