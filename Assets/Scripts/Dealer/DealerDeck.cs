@@ -6,8 +6,8 @@ using System.Linq;
 public class DealerDeck : MonoBehaviour
 {
 	private const string ADD_CARD_TRIGGER = "AddCard";
-	private const int DECK_PARENT_POSITION = 1;
-	private const int UIELEMENTS_POSITION = 3;
+	private const int DECK_PARENT_POSITION = 0;
+	private const int UIELEMENTS_POSITION = 1;
 
 	protected int total1;
 	protected int total2;
