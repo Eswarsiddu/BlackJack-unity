@@ -13,35 +13,4 @@ public class GameManager : DeckManager
 	{
         initializeDeck();
     }
-
-    #region Testing
-    [Header("\n\nTesting")]
-    public Button PlayButton;
-    public Button HitButton;
-    public Button StayButton;
-    public bool play = false;
-	protected override void VirtualUpdate()
-	{
-        if (Input.GetKeyDown(KeyCode.P) || play)
-		{
-            play = false;
-            PlayButton.onClick.Invoke();
-        }
-
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            HitButton.onClick.Invoke();
-        }
-
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            StayButton.onClick.Invoke();
-        }
-		if (Input.GetKeyDown(KeyCode.R))
-		{
-            resetDeck();
-		}
-    }
-	#endregion
-
 }

@@ -39,14 +39,7 @@ public class Card : MonoBehaviour
 	{
 		sprite_renderer = GetComponent<SpriteRenderer>();
 		card_sprite = sprite;
-		if (number >= 10)
-		{
-			_value = 10;
-		}
-		else
-		{
-			_value = number;
-		}
+		_value = (number >= 10) ? 10 : number;
 		ResetCard();
 	}
 
@@ -56,14 +49,5 @@ public class Card : MonoBehaviour
 		UpdateDetails(Constants.offsiteCardsParent, Vector3.zero, 0);
 		gameObject.SetActive(false);
 	}
-
-	#region Test
-
-	public override string ToString()
-	{
-		return _value.ToString();
-	}
-
-	#endregion
 
 }

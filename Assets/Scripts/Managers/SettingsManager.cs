@@ -44,7 +44,7 @@ public class SettingController
 public class SettingsManager : MonoBehaviour
 {
 
-    public Settings settings;
+    private Settings settings;
 
     [SerializeField] Color haptic_default;
     [SerializeField] Color sound_default;

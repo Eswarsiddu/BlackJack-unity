@@ -41,14 +41,7 @@ public abstract class DeckManager : MonoBehaviour
 	{
 		SoundManager.PlayCardMovingSound();
 		deck.AddCard(cards.Pop(), add_card_animation_completed);
-		printStack();
 	}
-
-	/*private void checkInitialWinStatus()
-	{
-		if (player_deck.win_status == WIN_STATUS.BLACKJACK)
-			dealEnd();
-	}*/
 
 	public void playerHit() // UI Button
 	{
@@ -114,8 +107,7 @@ public abstract class DeckManager : MonoBehaviour
 
 	private IEnumerator DealEndEnumerator()
 	{
-		//        yield return new WaitForSeconds(Constants.WAITING_TIME);
-		yield return new WaitForSeconds(seconds);
+		yield return new WaitForSeconds(Constants.WAITING_TIME);
 		resetDeck();
 	}
 
@@ -148,7 +140,6 @@ public abstract class DeckManager : MonoBehaviour
 			cards.Push(card);
 		}
 		cards.Shuffle();
-		printStack();
 	}
 
 	public void resetDeck()
@@ -194,7 +185,6 @@ public abstract class DeckManager : MonoBehaviour
 				{
 					startdeal = false;
 					EnableDealOptions();
-					//checkInitialWinStatus();
 					if (player_deck.win_status == WIN_STATUS.BLACKJACK)
 						dealEnd();
 				}
@@ -229,25 +219,5 @@ public abstract class DeckManager : MonoBehaviour
 				}
 			}
 		}
-
-		VirtualUpdate();
 	}
-
-	protected abstract void VirtualUpdate();
-
-	#region Test
-
-	[SerializeField] private float seconds;
-
-	private void printStack()
-	{
-		string s = "";
-		foreach (Card card in cards)
-		{
-			s += card.ToString() + ",";
-		}
-		Debug.Log(s);
-	}
-
-	#endregion
 }

@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -42,19 +41,14 @@ public class GameScreen : MonoBehaviour
 			original_position = current_position;
 		}
 
-		public float DifferenceX()
-		{
-			return Mathf.Abs(current_position.x - target_position.x);
-		}
+		public float DifferenceX() => Mathf.Abs(current_position.x - target_position.x);
+		
 
-		public float DifferenceY()
-		{
-			return Mathf.Abs(current_position.y - target_position.y);
-		}
+		public float DifferenceY() => Mathf.Abs(current_position.y - target_position.y);
 
 		public void Move()
 		{
-			current_position = Vector3.Lerp(current_position,target_position,InnerConstants.ANIMATION_SPEED);
+			current_position = Vector3.Lerp(current_position,target_position,ANIMATION_SPEED);
 		}
 
 		internal void ChangeTagetPosition(bool reverse= false)
@@ -71,42 +65,28 @@ public class GameScreen : MonoBehaviour
 		}
 	}
 
-	private static class InnerConstants
-	{
-		public const string BET_SELECT_AREA = "betselect";
-		public const string DEAL_AREA = "dealarea";
-		public const string DEALING = "dealing";
-		public const string BET_AMOUNT = "betamount";
-		public const string WIN_TEXT = "wintext";
-		public const string SCROOLBAR = "scrollbar";
-		public const string MIN_TEXT = "mintext";
-		public const string MAX_TEXT = "maxtext";
-		public const string START_DEAL_OBJECT = "startdeal";
-		public const string HIT_OBJECT = "hit";
-		public const string STAY_OBJECT = "stay";
+	public const string WIN_TEXT_TRIGER = "BetArea";
+	public const float ANIMATION_SPEED = 0.075f;
 
-		public const string WIN_TEXT_TRIGER = "BetArea";
+	private PlayerData playerdata;
 
-		public const float ANIMATION_SPEED = 0.075f;
-	};
+	private int minvalue;
+	private int maxvalue;
+	private int betamount;
 
 	[SerializeField] private GameObject home_Screen_object;
 	private HomeScreen home_screen_sript;
 
-	[SerializeField] private GameObject wintext_object;
 
 	[SerializeField] private DeckManager deckmanager;
-	[SerializeField] private TextMeshProUGUI coins_text;
 
-	[SerializeField] private Scrollbar scrollbar;
+	[SerializeField] private GameObject wintext_object;
 
 	[SerializeField] private Button backbutton;
 
-	[SerializeField] private PlayerData playerdata;
+	[SerializeField] private TextMeshProUGUI coins_text;
 
-	private int minvalue;
-	private int maxvalue; // TODO: Set min and values of table based on coins
-	private int betamount;
+	[SerializeField] private Scrollbar scrollbar;
 
 	[SerializeField] private TextMeshProUGUI min_text;
 	[SerializeField] private TextMeshProUGUI max_text;
@@ -123,7 +103,6 @@ public class GameScreen : MonoBehaviour
 	private Movement stay_movement;
 	private Movement bet_amount_movement;
 
-	private List<Movement> movements;
 	private Vector3 bet_text_target_pos;
 	private Animator animator;
 
@@ -145,54 +124,10 @@ public class GameScreen : MonoBehaviour
 		bet_amount_movement.target_position = bet_amount_movement.current_position;
 
 		home_screen_sript = home_Screen_object.GetComponent<HomeScreen>();
-
-		movements = new List<Movement>();
-		movements.Add(bet_amount_movement);
-		movements.Add(bet_select_movment);
-		movements.Add(stay_movement);
-		movements.Add(hit_movement);
 	}
 
 	void Start()
 	{
-
-		/*foreach(Transform child in transform)
-		{
-			switch(child.tag)
-			{
-				case InnerTags.WIN_TEXT:
-					win_text = child.GetComponent<TextMeshProUGUI>();
-					break;
-				case TAGS.COIN_OBJECT:
-					foreach(Transform ch in child)
-					{
-						if (ch.CompareTag(TAGS.COIN_TEXT_OBJECT))
-						{
-							coins_text = ch.GetComponent<TextMeshProUGUI>();
-							break;
-						}
-					}
-					break;
-				case InnerTags.DEAL_AREA:
-					foreach(Transform child1 in child)
-					{
-						switch(child1.tag)
-						{
-							case InnerTags.BET_SELECT_AREA:
-
-						}
-					}
-					break;
-				case TAGS.BACK:
-					backbutton = child.GetComponent<Button>();
-					break;
-			}
-		}*/
-
-
-		/*hit_transform = hit_object.GetComponent<RectTransform>();
-		stay_transform = stay_object.GetComponent<RectTransform>();*/
-
 		playerdata.RefreshCoinsText();
 		deckmanager.nextDeal = nextDeal;
 		deckmanager.DisableDealOptions = DisableDealOptions;
@@ -249,16 +184,13 @@ public class GameScreen : MonoBehaviour
 	{
 		deal_object.SetActive(true);
 		hit_movement.ChangeTagetPosition(reverse: true);
-		/*Vector3 pos = stay_movement.current_position;
-		pos.x = -hit_movement.current_position.x;
-		stay_movement.current_position = pos;*/
 		stay_movement.ChangeTagetPosition(reverse:true);
 	}
 
 	private void dealEnd()
 	{
 		wintext_object.SetActive(true);
-		animator.SetTrigger(InnerConstants.WIN_TEXT_TRIGER);
+		animator.SetTrigger(WIN_TEXT_TRIGER);
 		StartCoroutine(dealEndEnnumerator());
 	}
 
@@ -274,7 +206,6 @@ public class GameScreen : MonoBehaviour
 		deal_area_obj.SetActive(false);
 	}
 
-	public GameObject bet_text_object;
 	private void nextDeal()
 	{
 		minvalue = Constants.GetMinimumBet(playerdata.coins);
@@ -307,64 +238,20 @@ public class GameScreen : MonoBehaviour
 
 	private void Update()
 	{
-		/*foreach(Movement movement in movements)
-			if (movement.DifferenceX() > 0.1f || movement.DifferenceX() > 0.1f)
-				movement.Move();*/
-
 		if(bet_select_movment.DifferenceY()>0.1f)
-		{
 			bet_select_movment.Move();
-		}
 
 		if (bet_amount_movement.DifferenceX() > 0.1f)
-		{
 			bet_amount_movement.Move();
-		}
 
 		if (hit_movement.DifferenceX() > 0.01f)
-		{
 			hit_movement.Move();
-		}
 
 		if (stay_movement.DifferenceX() > 0.01f)
-		{
 			stay_movement.Move();
-		}
 
 		if (Input.GetKeyDown(KeyCode.Escape))
 			backbutton.onClick.Invoke();
-
-
-		#region Testimg
-
-		if(startdeal_bool)
-		{
-			startdeal_bool = false;
-			StartDeal();
-		}
-
-		if (hit_bool)
-		{
-			hit_bool = false;
-			deckmanager.playerHit();
-		}
-
-		if (stay_bool)
-		{
-			stay_bool = false;
-			deckmanager.playerStay();
-		}
-
-		#endregion
-
 	}
-
-	#region Testimg
-	
-	public bool startdeal_bool = false;
-	public bool hit_bool = false;
-	public bool stay_bool =false;
-	
-	#endregion
 
 }

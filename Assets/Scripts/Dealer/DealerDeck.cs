@@ -9,26 +9,30 @@ public class DealerDeck : MonoBehaviour
 	private const int DECK_PARENT_POSITION = 0;
 	private const int UIELEMENTS_POSITION = 1;
 
-	protected int total1;
-	protected int total2;
 	public int final_value { get; protected set; }
+	
 	private int prev_order_layer;
 
 	private Vector3 prev_pos;
 
-	protected List<Card> cards;
-
 	private GameObject score_object;
-
-	protected GameObject finalscore;
 
 	private Transform deck_parent;
 
 	private TextMeshPro final_value_text;
-	
+
 	private Animator animator;
 
 	private AnimationStateReference animation_completed;
+
+	protected int total1;
+	protected int total2;
+	
+	protected List<Card> cards;
+
+	protected GameObject finalscore;
+
+
 	public void AddCard(Card card,AnimationStateReference animation_completed)
 	{
 		this.animation_completed = animation_completed;
