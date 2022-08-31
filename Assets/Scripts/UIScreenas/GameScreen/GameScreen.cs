@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class GameScreen : MonoBehaviour
 {
-
 	private class Movement
 	{
 		public Vector3 original_position;
@@ -24,18 +23,16 @@ public class GameScreen : MonoBehaviour
 			original_position = current_position;
 		}
 
-		public void SetOffScreenPosiiton(bool isheight = true,int direction = 1)
+		public void SetOffScreenPosiiton(bool isheight = true,int direction = 1, float offscreenwidth = 20)
 		{
 			off_screen_position = original_position;
 			if (isheight)
 			{
-				float height = trans.rect.height;
-				off_screen_position.y -= (direction * height)+20;
+				off_screen_position.y -= (direction * (trans.rect.height + offscreenwidth));
 			}
 			else
 			{
-				float width = trans.rect.width;
-				off_screen_position.x -= (direction * width) + 20;
+				off_screen_position.x -= (direction * (trans.rect.width + offscreenwidth));
 			}
 		}
 
@@ -93,6 +90,9 @@ public class GameScreen : MonoBehaviour
 		public const float ANIMATION_SPEED = 0.075f;
 	};
 
+	[SerializeField] private GameObject home_Screen_object;
+	private HomeScreen home_screen_sript;
+
 	[SerializeField] private GameObject wintext_object;
 
 	[SerializeField] private DeckManager deckmanager;
@@ -131,7 +131,6 @@ public class GameScreen : MonoBehaviour
 	{
 		playerdata = Resources.Load<PlayerData>(Constants.PLAYER_DATA_PATH);
 		bet_text_target_pos = new Vector3(0, bet_text.GetComponent<RectTransform>().rect.height, 0);
-		//bet_text_target_pos = new Vector3(0, -100, 0);
 
 		bet_select_movment = new Movement(bet_select_object);
 		bet_select_movment.SetOffScreenPosiiton();
@@ -140,10 +139,12 @@ public class GameScreen : MonoBehaviour
 		hit_movement.SetOffScreenPosiiton(isheight: false);
 
 		stay_movement = new Movement(stay_object);
-		stay_movement.SetOffScreenPosiiton(isheight: false, direction: -1);
+		stay_movement.SetOffScreenPosiiton(isheight: false, direction: -1,offscreenwidth:40);
 
 		bet_amount_movement = new Movement(bet_text.gameObject);
 		bet_amount_movement.target_position = bet_amount_movement.current_position;
+
+		home_screen_sript = home_Screen_object.GetComponent<HomeScreen>();
 
 		movements = new List<Movement>();
 		movements.Add(bet_amount_movement);
@@ -194,16 +195,24 @@ public class GameScreen : MonoBehaviour
 
 		playerdata.RefreshCoinsText();
 		deckmanager.nextDeal = nextDeal;
-		deckmanager.DisableDealOptions = dealEnd;
+		deckmanager.DisableDealOptions = DisableDealOptions;
+		deckmanager.GameScreenDealEnd = dealEnd;
 		deckmanager.EnableDealOptions = EnableDealOptions;
 		backbutton.onClick.AddListener(SoundManager.PlayUIElementClickSound);
+		scrollbar.onValueChanged.AddListener(CalculateBetAmount);
 
 		animator = GetComponent<Animator>();
 	}
 
-	public void CalculateBetAmount()
+	public void CalculateBetAmount(float value)
 	{
-		betamount = minvalue + (int)((maxvalue - minvalue) * scrollbar.value);
+		betamount = minvalue + (int)((maxvalue - minvalue) * value);
+		if(minvalue == 0)
+		{
+			home_Screen_object.SetActive(true);
+			home_screen_sript.insufficentbalance();
+			gameObject.SetActive(false);
+		}
 		bet_text.text = betamount.ToString();
 	}
 
@@ -239,17 +248,24 @@ public class GameScreen : MonoBehaviour
 	public void EnableDealOptions()
 	{
 		deal_object.SetActive(true);
-		hit_movement.ChangeTagetPosition(reverse:true);
+		hit_movement.ChangeTagetPosition(reverse: true);
+		/*Vector3 pos = stay_movement.current_position;
+		pos.x = -hit_movement.current_position.x;
+		stay_movement.current_position = pos;*/
 		stay_movement.ChangeTagetPosition(reverse:true);
 	}
 
 	private void dealEnd()
 	{
-		hit_movement.ChangeTagetPosition();
-		stay_movement.ChangeTagetPosition();
 		wintext_object.SetActive(true);
 		animator.SetTrigger(InnerConstants.WIN_TEXT_TRIGER);
 		StartCoroutine(dealEndEnnumerator());
+	}
+
+	private void DisableDealOptions()
+	{
+		hit_movement.ChangeTagetPosition();
+		stay_movement.ChangeTagetPosition();
 	}
 
 	private IEnumerator dealEndEnnumerator()
@@ -261,11 +277,11 @@ public class GameScreen : MonoBehaviour
 	public GameObject bet_text_object;
 	private void nextDeal()
 	{
-		minvalue = (int)(playerdata.coins * Constants.PRECENT);
-		maxvalue = (int)(playerdata.coins * (1 - Constants.PRECENT));
+		minvalue = Constants.GetMinimumBet(playerdata.coins);
+		maxvalue = playerdata.coins - minvalue;
 		min_text.text = minvalue.ToString();
 		max_text.text = maxvalue.ToString();
-		CalculateBetAmount();
+		CalculateBetAmount(scrollbar.value);
 		bet_amount_movement.current_position = bet_amount_movement.original_position;
 		bet_amount_movement.target_position = bet_amount_movement.original_position;
 		deal_area_obj.SetActive(true);
@@ -305,12 +321,12 @@ public class GameScreen : MonoBehaviour
 			bet_amount_movement.Move();
 		}
 
-		if (hit_movement.DifferenceX() > 0.1f)
+		if (hit_movement.DifferenceX() > 0.01f)
 		{
 			hit_movement.Move();
 		}
 
-		if (stay_movement.DifferenceX() > 0.1f)
+		if (stay_movement.DifferenceX() > 0.01f)
 		{
 			stay_movement.Move();
 		}

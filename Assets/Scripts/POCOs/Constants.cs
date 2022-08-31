@@ -45,4 +45,9 @@ public static class Constants
 	{
         return random.Next(n);
     }
+
+    public static int GetMinimumBet(int coins)
+	{
+        return (int)(coins * PRECENT);
+    }
 }
