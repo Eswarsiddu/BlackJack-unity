@@ -1,43 +1,53 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SettingsManager : MonoBehaviour
+public class SettingController
 {
-    private Settings settings;
+    private Button button;
+    private Image image;
+    private Action[] actions;
+    private Func<bool> getState;
 
-    private Button haptic;
-    private Button sound;
+    private Color default_color;
+    private Color changed_color;
 
-    private Image haptic_image;
-    private Image sound_image;
-
-    [SerializeField] private Color defaultcolor;
-    [SerializeField] private Color changed_color;
-
-    public void ToggleHaptic() // UI Button
+    public SettingController(Button button,Color changed_color,Func<bool> getState,Action[] actions)
 	{
-        settings.ToggleHaptic();
+        this.button = button;
+        this.button.onClick.AddListener(Toggle);
+        this.changed_color = changed_color;
+        this.getState = getState;
+        this.actions = actions;
+
+        image = button.GetComponent<Image>();
+        default_color = Color.black;
+        UpdateGraphics();
+    }
+
+    private void Toggle()
+    {
+        foreach(Action action in actions)
+            action.Invoke();
+
+        UpdateGraphics();
         HapticManager.Vibrate();
-        UpdateHapticGraphics();
         SoundManager.PlayUIElementClickSound();
     }
 
-    public void ToggleSound() // UI Button
+    public void UpdateGraphics()
     {
-        settings.ToggleSound();
-        SoundManager.SoundToggled();
-        UpdateSoundGraphics();
+        image.color = getState() ? default_color : changed_color;
     }
+}
 
-    private void UpdateHapticGraphics()
-    {
-        haptic_image.color = settings.haptic ? defaultcolor : changed_color;
-    }
+public class SettingsManager : MonoBehaviour
+{
 
-    private void UpdateSoundGraphics()
-    {
-        sound_image.color = settings.sound ? defaultcolor : changed_color;
-    }
+    public Settings settings;
+
+    [SerializeField] Color haptic_default;
+    [SerializeField] Color sound_default;
 
     private void Awake()
     {
@@ -47,28 +57,30 @@ public class SettingsManager : MonoBehaviour
             switch (child.tag)
             {
                 case TAGS.HAPTIC:
-                    haptic = child.GetComponent<Button>(); break;
+                    Action[] arr = {
+                        settings.ToggleHaptic
+                    };
+                    new SettingController(
+                        button: child.GetComponent<Button>(),
+                        changed_color: haptic_default,
+                        getState: () => settings.haptic,
+                        actions: arr
+                        );
+                    break;
 
                 case TAGS.SOUND:
-                    sound = child.GetComponent<Button>(); break;
+                    Action[] brr = {
+                        settings.ToggleSound,
+                        SoundManager.SoundToggled
+                    };
+                    new SettingController(
+                        button: child.GetComponent<Button>(),
+                        changed_color: sound_default,
+                        getState: () => settings.sound,
+                        actions: brr
+                        );
+                    break;
             }
-
-            if(haptic != null && sound != null) break;
         }
     }
-
-    void Start()
-    {
-        //defaultcolor = haptic.colors.normalColor;
-
-        haptic.onClick.AddListener(ToggleHaptic);
-        sound.onClick.AddListener(ToggleSound);
-
-        haptic_image = haptic.GetComponent<Image>();
-        sound_image = sound.GetComponent<Image>();
-
-        UpdateHapticGraphics();
-        UpdateSoundGraphics();
-    }
-
 }

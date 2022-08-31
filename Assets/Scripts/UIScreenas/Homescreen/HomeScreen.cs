@@ -55,4 +55,16 @@ public class HomeScreen : MonoBehaviour
 		}
 	}
 
+	public void ExitApp()
+	{
+		Application.Quit();
+	}
+
+	private void Update()
+	{
+		if (Input.GetKey(KeyCode.Escape))
+		{
+			ExitApp();
+		}
+	}
 }

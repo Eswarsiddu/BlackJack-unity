@@ -199,13 +199,14 @@ public class GameScreen : MonoBehaviour
 		deckmanager.GameScreenDealEnd = dealEnd;
 		deckmanager.EnableDealOptions = EnableDealOptions;
 		backbutton.onClick.AddListener(SoundManager.PlayUIElementClickSound);
+		scrollbar.onValueChanged.AddListener(CalculateBetAmount);
 
 		animator = GetComponent<Animator>();
 	}
 
-	public void CalculateBetAmount()
+	public void CalculateBetAmount(float value)
 	{
-		betamount = minvalue + (int)((maxvalue - minvalue) * scrollbar.value);
+		betamount = minvalue + (int)((maxvalue - minvalue) * value);
 		if(minvalue == 0)
 		{
 			home_Screen_object.SetActive(true);
@@ -280,7 +281,7 @@ public class GameScreen : MonoBehaviour
 		maxvalue = playerdata.coins - minvalue;
 		min_text.text = minvalue.ToString();
 		max_text.text = maxvalue.ToString();
-		CalculateBetAmount();
+		CalculateBetAmount(scrollbar.value);
 		bet_amount_movement.current_position = bet_amount_movement.original_position;
 		bet_amount_movement.target_position = bet_amount_movement.original_position;
 		deal_area_obj.SetActive(true);
