@@ -7,6 +7,7 @@ public class GameManager : DeckManager
     void Awake()
     {
         Constants.offsiteCardsParent = cardparent;
+        SaveSystem.LoadData();
     }
 
 	private void Start()

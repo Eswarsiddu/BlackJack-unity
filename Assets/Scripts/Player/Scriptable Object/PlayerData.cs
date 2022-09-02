@@ -19,6 +19,7 @@ public class PlayerData : ScriptableObject
 	public void RefreshCoinsText()
 	{
 		UpdateCoins.Invoke(null, EventArgs.Empty);
+		SaveSystem.SaveData();
 	}
 
 	public void increaseCoins(int amount)
@@ -43,4 +44,8 @@ public class PlayerData : ScriptableObject
 		RefreshCoinsText();
 	}
 
+	public void SetCoins(int coins)
+	{
+		_coins = coins;
+	}
 }

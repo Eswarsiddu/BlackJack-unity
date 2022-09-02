@@ -10,15 +10,26 @@ public class Settings : ScriptableObject
 	public void ToggleHaptic()
 	{
 		_haptic = !_haptic;
+		SaveSystem.SaveData();
 	}
 
 	public void ToggleSound()
 	{
 		_sound = !_sound;
+		SaveSystem.SaveData();
 	}
 
 	public bool haptic { get => _haptic; }
 
 	public bool sound { get => _sound; }
 
+	public void SetHaptic(bool haptic)
+	{
+		_haptic = haptic;
+	}
+
+	public void SetSound(bool sound)
+	{
+		_sound = sound;
+	}
 }
